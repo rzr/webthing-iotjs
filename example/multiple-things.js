@@ -1,35 +1,10 @@
 const {
-  Action,
-  Event,
   MultipleThings,
   Property,
   Thing,
   Value,
   WebThingServer,
 } = require('webthing');
-const uuidv4 = require('uuid/v4');
-
-class OverheatedEvent extends Event {
-  constructor(thing, data) {
-    super(thing, 'overheated', data);
-  }
-}
-
-class FadeAction extends Action {
-  constructor(thing, input) {
-    super(uuidv4(), thing, 'fade', input);
-  }
-
-  performAction() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.thing.setProperty('brightness', this.input.brightness);
-        this.thing.addEvent(new OverheatedEvent(this.thing, 102));
-        resolve();
-      }, this.input.duration);
-    });
-  }
-}
 
 /**
  * A dimmable light that logs received commands to stdout.
@@ -65,41 +40,28 @@ class ExampleDimmableLight extends Thing {
           unit: 'percent',
         }));
 
-    this.addAvailableAction(
-      'fade',
-      {
-        label: 'Fade',
-        description: 'Fade the lamp to a given level',
-        input: {
-          type: 'object',
-          required: [
-            'brightness',
-            'duration',
-          ],
-          properties: {
-            brightness: {
-              type: 'number',
-              minimum: 0,
-              maximum: 100,
-              unit: 'percent',
-            },
-            duration: {
-              type: 'number',
-              minimum: 1,
-              unit: 'milliseconds',
-            },
-          },
-        },
-      },
-      FadeAction);
+    this.addProperty(this.getOnProperty());
+    this.addProperty(this.getLevelProperty());
+  }
 
-    this.addAvailableEvent(
-      'overheated',
-      {
-        description: 'The lamp has exceeded its safe operating temperature',
-        type: 'number',
-        unit: 'celsius',
-      });
+  getOnProperty() {
+    return new Property(
+      this,
+      'on',
+      new Value(true, (v) => console.log('On-State is now', v)),
+      {type: 'boolean',
+       description: 'Whether the lamp is turned on'});
+  }
+
+  getLevelProperty() {
+    return new Property(
+      this,
+      'level',
+      new Value(50, (l) => console.log('New light level is', l)),
+      {type: 'number',
+       description: 'The level of light from 0-100',
+       minimum: 0,
+       maximum: 100});
   }
 }
 
