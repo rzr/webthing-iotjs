@@ -1,35 +1,11 @@
 const {
-  Action,
-  Event,
   Property,
   SingleThing,
   Thing,
   Value,
   WebThingServer,
 } = require('webthing');
-const uuidv4 = require('uuid/v4');
 
-class OverheatedEvent extends Event {
-  constructor(thing, data) {
-    super(thing, 'overheated', data);
-  }
-}
-
-class FadeAction extends Action {
-  constructor(thing, input) {
-    super(uuidv4(), thing, 'fade', input);
-  }
-
-  performAction() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.thing.setProperty('brightness', this.input.brightness);
-        this.thing.addEvent(new OverheatedEvent(this.thing, 102));
-        resolve();
-      }, this.input.duration);
-    });
-  }
-}
 
 function makeThing() {
   const thing = new Thing('My Lamp',
@@ -59,42 +35,6 @@ function makeThing() {
                    maximum: 100,
                    unit: 'percent',
                  }));
-
-  thing.addAvailableAction(
-    'fade',
-    {
-      label: 'Fade',
-      description: 'Fade the lamp to a given level',
-      input: {
-        type: 'object',
-        required: [
-          'brightness',
-          'duration',
-        ],
-        properties: {
-          brightness: {
-            type: 'number',
-            minimum: 0,
-            maximum: 100,
-            unit: 'percent',
-          },
-          duration: {
-            type: 'number',
-            minimum: 1,
-            unit: 'milliseconds',
-          },
-        },
-      },
-    },
-    FadeAction);
-
-  thing.addAvailableEvent(
-    'overheated',
-    {
-      description: 'The lamp has exceeded its safe operating temperature',
-      type: 'number',
-      unit: 'celsius',
-    });
 
   return thing;
 }
