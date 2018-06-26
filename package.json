@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_PATH=. node example/flex-thing"
+    "start": "NODE_PATH=. node example/multiple-things"
   },
   "repository": {
     "type": "git",

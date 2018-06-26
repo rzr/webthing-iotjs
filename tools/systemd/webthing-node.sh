@@ -6,4 +6,12 @@ export NVM_DIR="$HOME/.nvm"
 which npm
 pwd
 ls node_modules || npm install
+cat /sys/kernel/debug/gpio ||:
+gpio -g mode 11 up
+cat /sys/kernel/debug/gpio ||:
+
+over=false
+hostname=sfb.lan
+while ! $over ; do ping -c 1 $hostname && over=true || sleep 1 ; done
+
 npm start
