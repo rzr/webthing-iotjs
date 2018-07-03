@@ -32,7 +32,8 @@
     "express": "^4.16.3",
     "express-ws": "^4.0.0",
     "gpio": "^0.2.7",
-    "local-ipv4-address": "^0.0.2"
+    "local-ipv4-address": "^0.0.2",
+    "onoff": "^3.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
