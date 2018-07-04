@@ -57,13 +57,16 @@ curl -H 'Content-Type: application/json' ${url}
   const input = gpio.export(pin, {
     direction: 'in',
     ready: () => {
-      console.log(`log: GPIO${pin}: ready: ${input.value}`);
-      input.on("change", (value) => {
-        console.log(`log: GPIO${pin}: change: ${value}`);
+      input.value = undefined;
+      input._get((value) => {
+        console.log(`log: GPIO${pin}: ready: ${value}`);
+        input.on("change", (value) => {
+          console.log(`log: GPIO${pin}: change: ${value}`);
+          thing.value.notifyOfExternalUpdate(Boolean(value));
+        });
+        server.start();
         thing.value.notifyOfExternalUpdate(Boolean(value));
       });
-      server.start();
-      thing.value.notifyOfExternalUpdate(Boolean(input.value));
     }
   });
 }
