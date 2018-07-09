@@ -23,7 +23,7 @@ class FadeAction extends Action {
   performAction() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.thing.setProperty('brightness', this.input.brightness);
+        this.thing.setProperty('level', this.input.level);
         this.thing.addEvent(new OverheatedEvent(this.thing, 102));
         resolve();
       }, this.input.duration);
@@ -32,55 +32,41 @@ class FadeAction extends Action {
 }
 
 function makeThing() {
-  const thing = new Thing('My Lamp',
-                          ['OnOffSwitch', 'Light'],
-                          'A web connected lamp');
+  const thing = new Thing('My Lamp', 'dimmableLight', 'A web connected lamp');
 
   thing.addProperty(
     new Property(thing,
                  'on',
                  new Value(true, () => {}),
-                 {
-                   '@type': 'OnOffProperty',
-                   label: 'On/Off',
-                   type: 'boolean',
-                   description: 'Whether the lamp is turned on',
-                 }));
+                 {type: 'boolean',
+                  description: 'Whether the lamp is turned on'}));
   thing.addProperty(
     new Property(thing,
-                 'brightness',
+                 'level',
                  new Value(50, () => {}),
-                 {
-                   '@type': 'BrightnessProperty',
-                   label: 'Brightness',
-                   type: 'number',
-                   description: 'The level of light from 0-100',
-                   minimum: 0,
-                   maximum: 100,
-                   unit: 'percent',
-                 }));
+                 {type: 'number',
+                  description: 'The level of light from 0-100',
+                  minimum: 0,
+                  maximum: 100}));
 
   thing.addAvailableAction(
     'fade',
     {
-      label: 'Fade',
       description: 'Fade the lamp to a given level',
       input: {
         type: 'object',
         required: [
-          'brightness',
+          'level',
           'duration',
         ],
         properties: {
-          brightness: {
+          level: {
             type: 'number',
             minimum: 0,
             maximum: 100,
-            unit: 'percent',
           },
           duration: {
             type: 'number',
-            minimum: 1,
             unit: 'milliseconds',
           },
         },
@@ -90,11 +76,9 @@ function makeThing() {
 
   thing.addAvailableEvent(
     'overheated',
-    {
-      description: 'The lamp has exceeded its safe operating temperature',
-      type: 'number',
-      unit: 'celsius',
-    });
+    {description: 'The lamp has exceeded its safe operating temperature',
+     type: 'number',
+     unit: 'celsius'});
 
   return thing;
 }
