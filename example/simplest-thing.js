@@ -17,10 +17,9 @@ const {
 } = require('../index');
 
 function makeThing() {
-  const thing = new Thing('ActuatorExample',
+  const thing = new Thing('OnOffSwitch',
                           'onOffSwitch',
                           'An actuator example that just log');
-
   thing.addProperty(
     new Property(thing,
                  'on',
