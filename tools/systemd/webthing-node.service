@@ -3,8 +3,10 @@ Description=webthing-node
 After=network.target
 
 [Service]
+Type=simple
+User=pi
 WorkingDirectory=/usr/local/src/webthing-node
-ExecStart=/usr/bin/npm start
+ExecStart=/usr/local/src/webthing-node/tools/systemd/webthing-node.sh
 Restart=always
 
 [Install]
