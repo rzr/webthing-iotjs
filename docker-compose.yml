@@ -21,8 +21,8 @@ version: "2"
 services:
   web:
     build: .
-    command: /usr/bin/npm run start
+    command: /usr/bin/make run
     volumes:
-      - /usr/local/webthing-node/webthing-node
+      - /usr/local/webthing-iotjs/webthing-iotjs
     ports:
       - "8888:8888"

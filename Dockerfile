@@ -25,26 +25,40 @@ RUN echo "#log: Configuring locales" \
   && dpkg-reconfigure locales \
   && sync
 
-ENV project webthing-node
+ENV project webthing-iotjs
 
 RUN echo "#log: ${project}: Setup system" \
   && set -x \
   && apt-get update -y \
-  && apt-get install -y npm \
+  && apt-get install -y sudo apt-transport-https make \
+  && apt-cache show iotjs || echo "TODO: it's in debian testing! "\
   && apt-get clean \
+  && sync
+
+RUN echo "#log: ${project}: Setup system: Install iotjs" \
+  && set -x \
+  && sudo apt-get update -y \
+  && version="debian:latest" \
+  && cat /etc/os-release \
+  && distro="xUbuntu_18.04" \
+  && url="http://download.opensuse.org/repositories/home:/rzrfreefr:/snapshot/$distro" \
+  && file="/etc/apt/sources.list.d/org_opensuse_home_rzrfreefr_snapshot.list" \
+  && echo "deb [allow-insecure=yes] $url /" | sudo tee "$file" \
+  && sudo apt-get update -y \
+  && package=iotjs-snapshot \
+  && version=$(apt-cache show "$package" | grep 'Version:' | cut -d' ' -f2 | sort -n | head -n1 || echo 0) \
+  && sudo apt-get install -y --allow-unauthenticated iotjs-snapshot=$version iotjs=$version \
   && sync
 
 ADD . /usr/local/${project}/${project}
 WORKDIR /usr/local/${project}/${project}
 RUN echo "#log: ${project}: Preparing sources" \
   && set -x \
-  && which npm \
-  && npm --version \
-  && npm install \
-  && npm run lint \
-  && npm run test || echo "TODO: check package.json" \
+  && make setup \
+  && make \
+  && make check \
   && sync
 
 EXPOSE 8888
 WORKDIR /usr/local/${project}/${project}
-CMD [ "/usr/bin/npm" "run" "start"]
+CMD [ "/usr/bin/make" "run"]
