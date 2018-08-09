@@ -21,13 +21,14 @@ const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
-class PlayPHatThing extends Thing {
-  constructor(name, type, description) {
-    super('urn:dev:ops:my-play-phat-1234',
-          name || 'PlayPHat',
-          type || [],
-          description || 'A web connected Play RaspberryPi Hat');
-    const self = this;
+function PlayPHatThing(name, type, description) {
+  const self = this;
+  Thing.call(this,
+             'urn:dev:ops:my-play-phat-1234',
+             name || 'PlayPHat',
+             type || [],
+             description || 'A web connected Play RaspberryPi Hat');
+  {
     this.gpioProperties = [
       new GpioProperty(this, 'Left', false,
                        {description:
