@@ -20,13 +20,14 @@ const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
-class FlexPHatThing extends Thing {
-  constructor(name, type, description) {
-    super('urn:dev:ops:my-flex-phat-1234',
-          name || 'FlexPHat',
-          type || [],
-          description || 'A web connected Flex RaspberryPi Hat');
-    const self = this;
+function FlexPHatThing(name, type, description) {
+  const self = this;
+  Thing.call(this,
+             'urn:dev:ops:my-flex-phat-1234',
+             name || 'FlexPHat',
+             type || [],
+             description || 'A web connected Flex RaspberryPi Hat');
+  {
     this.gpioProperties = [
       new GpioProperty(this, 'Relay', false,
                        {description:
