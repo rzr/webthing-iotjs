@@ -22,14 +22,14 @@ const {
 
 const gpio = require('gpio');
 
-class GpioOutProperty extends Property {
-  constructor(thing, name, value, metadata, config) {
-    super(thing, name, new Value(Boolean(value)),
-          {
-            '@type': 'OnOffProperty',
-            title: (metadata && metadata.title) || `On/Off: ${name}`,
-            type: 'boolean',
-            description: (metadata && metadata.description) ||
+function GpioOutProperty(thing, name, value, metadata, config) {
+  const self = this;
+  Property.call(this, thing, name, new Value(Boolean(value)),
+                {
+                  '@type': 'OnOffProperty',
+                  title: (metadata && metadata.title) || `On/Off: ${name}`,
+                  type: 'boolean',
+                  description: (metadata && metadata.description) ||
               (`GPIO Actuator on pin=${config.pin}`),
           });
     const self = this;
