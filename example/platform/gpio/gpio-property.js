@@ -76,7 +76,7 @@ function GpioOutProperty(thing, name, value, metadata, config) {
 }
 
 function GpioInProperty(thing, name, value, metadata, config) {
-  var _this = this;
+  const _this = this;
   _this.value = new Value(value, function (value) {
     _this.handleValueChanged && _this.handleValueChanged(value);
   });
@@ -102,7 +102,7 @@ function GpioInProperty(thing, name, value, metadata, config) {
       }
 
       _this.inverval = setInterval(() => {
-        var value =_this.port.readSync();
+        let value = _this.port.readSync();
 
         // log("log: GPIO: " + _this.getName() + ": read: " + value);
 

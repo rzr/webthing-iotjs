@@ -10,18 +10,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
-class PlayPHatThing extends Thing {
-  constructor(name, type, description) {
-    super(name || 'PlayPHat',
-          type || [],
-          description || 'A web connected Play RaspberryPi Hat');
-    const _this = this;
+function PlayPHatThing(name, type, description) {
+  const _this = this;
+  Thing.call(this,
+               name || 'PlayPHat',
+               type || [],
+               description || 'A web connected Play RaspberryPi Hat');
+  {
     this.gpioProperties = [
       new GpioProperty(this, 'Left', false,
                        {description:
@@ -61,11 +67,13 @@ class PlayPHatThing extends Thing {
     });
   }
 
-  close() {
-    this.gpioProperties.forEach((property) => {
+  this.close = () => {
+    _this.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {
