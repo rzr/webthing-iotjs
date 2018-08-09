@@ -23,6 +23,6 @@ services:
     build: .
     command: start
     volumes:
-      - /usr/local/webthing-node/webthing-node
+      - /usr/local/webthing-iotjs/webthing-iotjs
     ports:
       - "8888:8888"
