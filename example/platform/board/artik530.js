@@ -10,19 +10,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Thing = webthing.Thing;
 
 const AdcProperty = require('../adc/adc-property');
 const GpioProperty = require('../gpio/gpio-property');
 
-class ARTIK530Thing extends Thing {
-  constructor(name, type, description) {
-    super(name || 'ARTIK530',
-          type || [],
-          description || 'A web connected ARTIK530 or ARTIK720');
-    const self = this;
+function ARTIK530Thing(name, type, description) {
+  const self = this;
+  Thing.call(this,
+             name || 'ARTIK530',
+             type || [],
+             description || 'A web connected ARTIK530 or ARTIK720');
+  {
     this.pinProperties = [
       new GpioProperty(this, 'RedLED', false,
                        {description:
@@ -57,11 +62,13 @@ c0053000.adc/iio:device0/in_voltage1_raw'}),
     });
   }
 
-  close() {
+  this.close = () => {
     this.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {
