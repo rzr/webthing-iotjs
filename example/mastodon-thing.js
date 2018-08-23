@@ -21,13 +21,19 @@ const Mastodon = require('mastodon-lite');
 const conf = '.mastodon-lite.json';
 const config = JSON.parse(fs.readFileSync(conf, 'utf8'));
 const mastodon = Mastodon(config);
+var lastHandle = new Date();
 
 function handleLevelUpdate(value)
 { 
   var message = value;
-  message = `https://s-opensource.org/tag/wot/# #MultiLevelSwitch is \"${value}\" (#MastodonLite #WebThing Actuator)`
+  message = `https://s-opensource.org/tag/wot/# #MultiLevelSwitch is \"${value}\" (#MastodonLite #WebThing Actuator @TizenHelper)`
+  message = `@rzr@mastodon.social 's plants are drying (${value}) ! Can neighboor @TizenHelper water them ?`
   console.log(message);
-  mastodon.post(message);
+  var now = new Date();
+  if ((now - lastHandle) > 60*1000) {
+    mastodon.post(message);
+    lastHandle = now;
+  }
 }
 
 function makeThing() {
@@ -46,7 +52,7 @@ function makeThing() {
 }
 
 function runServer() {
-  const port = process.argv[2] ? Number(process.argv[2]) : 8888;
+  const port = process.argv[2] ? Number(process.argv[2]) : 8042;
   const url = `http://localhost:${port}/properties/multiLevelSwitch`;
   console.log('Usage:\n'
               + process.argv[0] + ' ' + process.argv[1] + ' [port]\n'

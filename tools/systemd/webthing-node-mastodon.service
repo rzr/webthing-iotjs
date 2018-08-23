@@ -1,0 +1,13 @@
+[Unit]
+Description=webthing-node-mastodon
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/usr/local/src/webthing-node
+ExecStart=/usr/local/src/webthing-node/tools/systemd/webthing-node-mastodon.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
