@@ -1,0 +1,19 @@
+{
+  "name": "mastodon-thing",
+  "version": "0.0.0",
+  "description": "A simple webthing actuator that blog",
+  "main": "mastodon-thing.js",
+  "scripts": {
+    "start": "NODE_PATH=../.. node mastodon-thing",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "activitypub",
+    "iotjs-module"
+  ],
+  "author": "Philippe Coval",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "mastodon-lite": "0.0.2"
+  }
+}
