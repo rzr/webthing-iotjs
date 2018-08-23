@@ -11,7 +11,7 @@
 
 srcs ?= $(wildcard lib/*.js | sort )
 main_src ?= example/multiple-things.js
-runtime ?= node
+runtime ?= iotjs
 run_args ?=
 
 default: check
@@ -78,12 +78,9 @@ setup: setup/${runtime}
 
 babel: ./node_modules/.bin/babel
 	cat .babelrc
-	rm -rf dist
+	@rm -rf dist
 	BABEL_ENV=production ./node_modules/.bin/babel .  --experimental --source-maps-inline -d ./dist --ignore 'node_modules/**'
-	rm -rf lib example *.js
-	cp -rfa dist/lib lib
-	cp -rfa dist/example example
-	cp -a dist/*.js .
+	rsync -avx dist/ ./
 
 .babelrc:
 	ls $@ || echo '{ "ignore": [ "node_modules/**.js" ] }' > $@
@@ -98,7 +95,12 @@ babel/runtime/%:
 	${MAKE} babel
 	-git commit -am "babel: Babelized for $@"
 
-./node_modules/.bin/babel: ./node_modules Makefile
+babel/runtimes:
+	${MAKE} babel/runtime/node
+	${MAKE} babel/runtime/iotjs
+
+./node_modules/.bin/babel: Makefile
+	ls node_modules || ${MAKE} node_modules
 	-git commit -am "WIP: babel: About to babelize"
 	npm install @babel/cli
 	npm install @babel/core
@@ -109,3 +111,19 @@ babel/runtime/%:
 	echo "TODO: npm install @babel/plugin-transform-classes"
 	npm install @babel/preset-env
 	-git commit -am "WIP: babel: Installed tools"
+
+transpile/revert:
+	@echo "TODO: move $@ patch and iotjs port at end of list"
+	-git commit -am "WIP: babel: About to $@"
+	git rebase -i remotes/upstream/master
+	git revert HEAD
+	git revert HEAD~2
+
+transpile: transpile/revert
+	${MAKE} babel/commit
+	git rebase -i remotes/upstream/master
+
+setup/iotjs:
+	iotjs -h || echo "log: Should have printed iotjs's usage..."
+	-which iotjs
+

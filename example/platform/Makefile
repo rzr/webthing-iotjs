@@ -69,12 +69,13 @@ artik530/%: ${main_src} /sys/class/gpio/export
 	${MAKE} run/${@F} run_args="${@D}"
 
 flex-phat/%: ${main_src} /sys/class/gpio/export
+	-cat /proc/device-tree/hat/product
 	-gpio -v || sudo apt-get install gpio
 	gpio -g mode 11 up
 	${MAKE} run/${@F} run_args="${@D}"
 
-
 play-phat/%: ${main_src} /sys/class/gpio/export
+	-cat /proc/device-tree/hat/product
 	-lsmod | grep gpio_keys \
  && ${sudo} modprobe -rv gpio_keys \
  || echo "log: will use /sys/class/gpio/"
