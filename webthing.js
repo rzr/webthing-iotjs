@@ -4,5 +4,5 @@ module.exports = {
   Property: require('./lib/property'),
   Thing: require('./lib/thing'),
   Value: require('./lib/value'),
-  ...require('./lib/server'),
+  server: require('./lib/server')
 };
