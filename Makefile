@@ -12,7 +12,7 @@
 default: help all
 
 tmp_dir ?= tmp
-runtime ?= node
+runtime ?= iotjs
 export runtime
 eslint ?= node_modules/eslint/bin/eslint.js
 srcs ?= $(wildcard *.js lib/*.js | sort | uniq)
@@ -140,9 +140,21 @@ ${eslint}:
 .eslintrc.js: ${eslint}
 	ls $@ || $< --init
 
+
 lint/%: eslint
 	sync
 
 lint: lint/${runtime}
 	sync
+
+
+### IoT.js related rules:
+
+setup/iotjs:
+	iotjs \
+ || echo "log: Should have printed iotjs's usage..."
+	-which iotjs
+
+build/iotjs: setup
+	echo "log: $@: $^"
 
