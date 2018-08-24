@@ -11,7 +11,7 @@
 
 main_src ?= index.js
 lib_srcs ?= $(wildcard */*.js | sort)
-runtime ?= node
+runtime ?= iotjs
 topreldir ?= ../..
 topdir ?= ${CURDIR}/${topreldir}
 run_args ?= start
@@ -24,12 +24,17 @@ default: check
 
 run/%: ${main_src} /sys/class/gpio/export
 	ls $<
+	-which ${@F}
 	${@F} $< ${run_args}
 
-run/node: ${main_src} package.json /sys/class/gpio/export
+run/npm: ${main_src} package.json /sys/class/gpio/export
 	ls -l node_modules || ${MAKE} node_modules
 	ls -l ${topreldir}/node_modules || { cd ${topreldir} && npm install ; }
 	npm run ${run_args}
+
+run/node: ${main_src} package.json /sys/class/gpio/export
+	ls $<
+	NODE_PATH=.:${topreldir}:${topreldir}/extra ${@F} $< ${run_args}
 
 run: run/${runtime}
 
@@ -49,7 +54,7 @@ package.json:
 
 check/%: ${lib_srcs}
 	status=0 ; \
-	for src in $^; do \
+ for src in $^; do \
  echo "log: check: $${src}: ($@)" ; \
  ${@F} $${src} \
  && echo "log: check: $${src}: OK" \
@@ -59,6 +64,9 @@ check/%: ${lib_srcs}
 
 check: check/${runtime}
 
+
+artik530/%: ${main_src} /sys/class/gpio/export
+	${MAKE} run/${@F} run_args="${@D}"
 
 flex-phat/%: ${main_src} /sys/class/gpio/export
 	-gpio -v || sudo apt-get install gpio
