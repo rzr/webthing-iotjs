@@ -1,17 +1,24 @@
-const {
-  MultipleThings,
-  Property,
-  Thing,
-  Value,
-  WebThingServer,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Property = webthing.Property;
+const MultipleThings = webthing.server.MultipleThings;
+const Thing = webthing.Thing;
+const Value = webthing.Value;
+const WebThingServer = webthing.server.WebThingServer;
 
 /**
  * A dimmable light that logs received commands to stdout.
  */
-class ExampleDimmableLight extends Thing {
-  constructor() {
-    super('My Lamp', ['OnOffSwitch', 'Light'], 'A web connected lamp');
+function ExampleDimmableLight() {
+  {
+    Thing.call(this,
+               'My Lamp',
+               ['OnOffSwitch', 'Light'],
+               'A web connected lamp');
 
     this.addProperty(
       new Property(
@@ -39,21 +46,18 @@ class ExampleDimmableLight extends Thing {
           maximum: 100,
           unit: 'percent',
         }));
-
-    this.addProperty(this.getOnProperty());
-    this.addProperty(this.getLevelProperty());
   }
 
-  getOnProperty() {
+  this.getOnProperty = () => {
     return new Property(
       this,
       'on',
       new Value(true, (v) => console.log('On-State is now', v)),
       {type: 'boolean',
        description: 'Whether the lamp is turned on'});
-  }
+  };
 
-  getLevelProperty() {
+  this.getLevelProperty = () => {
     return new Property(
       this,
       'level',
@@ -62,18 +66,21 @@ class ExampleDimmableLight extends Thing {
        description: 'The level of light from 0-100',
        minimum: 0,
        maximum: 100});
-  }
+  };
+
+  this.addProperty(this.getOnProperty());
+  this.addProperty(this.getLevelProperty());
+  return this;
 }
 
 /**
  * A humidity sensor which updates its measurement every few seconds.
  */
-class FakeGpioHumiditySensor extends Thing {
-  constructor() {
-    super('My Humidity Sensor',
-          ['MultiLevelSensor'],
-          'A web connected humidity sensor');
-
+function FakeGpioHumiditySensor() {
+  Thing.call(this, 'My Humidity Sensor',
+             ['MultiLevelSensor'],
+             'A web connected humidity sensor');
+  {
     this.level = new Value(0.0);
     this.addProperty(
       new Property(
@@ -103,9 +110,9 @@ class FakeGpioHumiditySensor extends Thing {
   /**
    * Mimic an actual sensor updating its reading every couple seconds.
    */
-  readFromGPIO() {
+  this.readFromGPIO = () => {
     return Math.abs(70.0 * Math.random() * (-0.5 + Math.random()));
-  }
+  };
 }
 
 function runServer() {
