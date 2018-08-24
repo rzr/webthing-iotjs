@@ -76,15 +76,25 @@ setup/node: package.json
 
 setup: setup/${runtime}
 
-babel: ./node_modules/.bin/babel
-	cat .babelrc
-	@rm -rf dist
-	BABEL_ENV=production ./node_modules/.bin/babel .  --experimental --source-maps-inline -d ./dist --ignore 'node_modules/**'
-	rsync -avx dist/ ./
+babel: ./node_modules/.bin/babel ${CURDIR}/extra/${runtime}/.babelrc
+	cat "${CURDIR}/extra/${runtime}/.babelrc"
+	$< \
+--no-babelrc \
+--config-file "${PWD}/.babelrc" \
+--delete-dir-on-start \
+--ignore 'node_modules/**,dist/**' \
+-d "${CURDIR}/tmp/dist/${runtime}/" \
+--verbose \
+.
+	rsync -avx tmp/dist/${runtime}/ ./
+	@rm -rf tmp/dist/${runtime}/
 
 .babelrc:
 	ls $@ || echo '{ "ignore": [ "node_modules/**.js" ] }' > $@
 	touch $@
+
+
+babel/setup: ./node_modules/.bin/babel
 
 babel/commit: .babelrc babel/runtime/node babel/runtime/iotjs
 
@@ -92,14 +102,14 @@ babel/runtime/%:
 	-git commit -am "WIP: babel: About to babelize for ${@F}"
 	cp -av extra/${@F}/.babelrc .babelrc
 	-git commit -am "WIP: babel: About to babelize for ${@F}"
-	${MAKE} babel
+	${MAKE} babel runtime=${@F}
 	-git commit -am "babel: Babelized for $@"
 
 babel/runtimes:
 	${MAKE} babel/runtime/node
 	${MAKE} babel/runtime/iotjs
 
-./node_modules/.bin/babel: Makefile
+./node_modules/.bin/babel:
 	ls node_modules || ${MAKE} node_modules
 	-git commit -am "WIP: babel: About to babelize"
 	npm install @babel/cli
@@ -126,4 +136,3 @@ transpile: transpile/revert
 setup/iotjs:
 	iotjs -h || echo "log: Should have printed iotjs's usage..."
 	-which iotjs
-
