@@ -13,7 +13,7 @@ default: help all
 
 main_src ?= index.js
 lib_srcs ?= $(wildcard */*.js | sort)
-runtime ?= node
+runtime ?= iotjs
 topreldir ?= ../..
 topdir ?= ${CURDIR}/${topreldir}
 run_args ?=
@@ -48,6 +48,11 @@ all: check
 setup/node: ${topreldir}/node_modules node_modules
 	@echo "NODE_PATH=$${NODE_PATH}"
 	@echo "$@: $^"
+
+setup/iotjs:
+	echo "log: IoT.js's help expected to be printed"
+	${runtime} -h ||:
+	echo "$@: $^"
 
 run/%: /sys/class/gpio/export ${main_src} setup
 	ls -l $<
@@ -94,7 +99,7 @@ ${topreldir}/node_modules: ${topreldir}/package.json
 check/%: ${lib_srcs}
 	${MAKE} setup
 	status=0 ; \
-	for src in $^; do \
+ for src in $^; do \
  echo "log: check: $${src}: ($@)" ; \
  ${@F} $${src} \
  && echo "log: check: $${src}: OK" \
