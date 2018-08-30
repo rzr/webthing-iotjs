@@ -9,11 +9,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
+const console = require('console'); // Disable logs here by editing to '!console.log'
 
-const console = require('console');
 
-// Disable logs here by editing to '!console.log'
-const log = console.log || function() {};
+const log = console.log || function () {};
 
 let webthing;
 
@@ -22,6 +21,7 @@ try {
 } catch (err) {
   webthing = require('webthing');
 }
+
 const Property = webthing.Property;
 const Value = webthing.Value;
 
@@ -29,20 +29,20 @@ const gpio = require('gpio');
 
 function GpioOutProperty(thing, name, value, metadata, config) {
   const _this = this;
-  Property.call(this, thing, name, new Value(value, (value) => {
+
+  Property.call(this, thing, name, new Value(value, value => {
     _this.handleValueChanged && _this.handleValueChanged(value);
   }), {
     '@type': 'OnOffProperty',
-            label: (metadata && metadata.label) || `On/Off: ${name}`,
+    label: metadata && metadata.label || `On/Off: ${name}`,
     type: 'boolean',
-    description: (metadata && metadata.description) || 
-              (`GPIO Actuator on pin=${config.pin}`),
+    description: metadata && metadata.description || `GPIO Actuator on pin=${config.pin}`
   });
   {
     _this.port = gpio.open({
       pin: config.pin,
       direction: gpio.DIRECTION.OUT
-    }, (err) => {
+    }, err => {
       log(`log: GPIO: ${_this.getName()}: open: ${err} (null expected)`);
 
       if (err) {
@@ -50,9 +50,10 @@ function GpioOutProperty(thing, name, value, metadata, config) {
         return err;
       }
 
-      _this.handleValueChanged = (value) => {
+      _this.handleValueChanged = value => {
         try {
-           log(`log: GPIO: ${_this.getName()}: writing: ${value}`);
+          log(`log: GPIO: ${_this.getName()}: writing: ${value}`);
+
           _this.port.write(value);
         } catch (err) {
           console.error(`error: GPIO: ${_this.getName()}: Failed to write: ${err}`);
@@ -69,6 +70,7 @@ function GpioOutProperty(thing, name, value, metadata, config) {
       console.error("error: GPIO: ".concat(_this.getName(), ": Fail to close: ${err}"));
       return err;
     }
+
     log(`log: GPIO: ${_this.getName()}: close:`);
   };
 
@@ -77,23 +79,22 @@ function GpioOutProperty(thing, name, value, metadata, config) {
 
 function GpioInProperty(thing, name, value, metadata, config) {
   const _this = this;
+
   _this.value = new Value(value, function (value) {
     _this.handleValueChanged && _this.handleValueChanged(value);
   });
   Property.call(this, thing, name, _this.value, {
     '@type': 'BooleanProperty',
-            label: (metadata && metadata.label) || `On/Off: ${name}`,
+    label: metadata && metadata.label || `On/Off: ${name}`,
     type: 'boolean',
-            description:
-            (metadata && metadata.description) ||
-              (`GPIO Sensor on pin=${config.pin}`),
+    description: metadata && metadata.description || `GPIO Sensor on pin=${config.pin}`
   });
   {
     _this.period = 100;
     _this.port = gpio.open({
       pin: config.pin,
       direction: gpio.DIRECTION.IN
-    }, (err) => {
+    }, err => {
       log(`log: GPIO: ${_this.getName()}: open: ${err} (null expected)`);
 
       if (err) {
@@ -102,13 +103,14 @@ function GpioInProperty(thing, name, value, metadata, config) {
       }
 
       _this.inverval = setInterval(() => {
-        let value = _this.port.readSync();
+        let value = _this.port.readSync(); // log("log: GPIO: " + _this.getName() + ": read: " + value);
 
-        // log("log: GPIO: " + _this.getName() + ": read: " + value);
 
         if (value !== _this.lastValue) {
-           log(`log: GPIO: ${_this.getName()}: change: ${value}`);
+          log(`log: GPIO: ${_this.getName()}: change: ${value}`);
+
           _this.value.notifyOfExternalUpdate(value);
+
           _this.lastValue = value;
         }
       }, _this.period);
@@ -123,8 +125,10 @@ function GpioInProperty(thing, name, value, metadata, config) {
       console.error(`error: GPIO: ${_this.getName()}: Fail to close`);
       return err;
     }
+
     log(`log: GPIO: ${_this.getName()}: close:`);
   };
+
   return this;
 }
 
@@ -134,6 +138,7 @@ function GpioProperty(thing, name, value, metadata, config) {
   } else if (config.direction === 'in') {
     return new GpioInProperty(thing, name, value, metadata, config);
   }
+
   throw 'error: Invalid param';
 }
 

@@ -9,7 +9,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-
 let webthing;
 
 try {
@@ -17,43 +16,45 @@ try {
 } catch (err) {
   webthing = require('webthing');
 }
+
 const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
 function ARTIK530Thing(name, type, description) {
   const _this = this;
-  Thing.call(this,
-             name || 'ARTIK530',
-             type || [],
-             description || 'A web connected ARTIK530 or ARTIK720');
+
+  Thing.call(this, name || 'ARTIK530', type || [], description || 'A web connected ARTIK530 or ARTIK720');
   {
-   this.gpioProperties = [
-      new GpioProperty(this, 'RedLED', false,
-                            {description:
-                             'Red LED on interposer board (on GPIO28)'},
-                       {direction: 'out', pin: 28}),
-      new GpioProperty(this, 'BlueLED', false,
-                       {description:
-                             'Blue LED on interposer board (on GPIO38)'},
-                       {direction: 'out', pin: 38}),
-      new GpioProperty(this, 'Up', false,
-                       {description:
-                             'SW403 Button: Nearest board edge,\
- next to red LED (on GPIO30)'},
-                       {direction: 'in', pin: 30}),
-      new GpioProperty(this, 'Down', false,
-                       {description:
-                             'SW404 Button: Next to blue LED (on GPIO32)'},
-                       {direction: 'in', pin: 32}),
-    ];
-    this.gpioProperties.forEach((property) => {
+    this.gpioProperties = [new GpioProperty(this, 'RedLED', false, {
+      description: 'Red LED on interposer board (on GPIO28)'
+    }, {
+      direction: 'out',
+      pin: 28
+    }), new GpioProperty(this, 'BlueLED', false, {
+      description: 'Blue LED on interposer board (on GPIO38)'
+    }, {
+      direction: 'out',
+      pin: 38
+    }), new GpioProperty(this, 'Up', false, {
+      description: 'SW403 Button: Nearest board edge,\
+ next to red LED (on GPIO30)'
+    }, {
+      direction: 'in',
+      pin: 30
+    }), new GpioProperty(this, 'Down', false, {
+      description: 'SW404 Button: Next to blue LED (on GPIO32)'
+    }, {
+      direction: 'in',
+      pin: 32
+    })];
+    this.gpioProperties.forEach(property => {
       _this.addProperty(property);
     });
   }
 
   this.close = () => {
-    this.gpioProperties.forEach((property) => {
+    this.gpioProperties.forEach(property => {
       property.close && property.close();
     });
   };
@@ -61,9 +62,10 @@ function ARTIK530Thing(name, type, description) {
   return this;
 }
 
-module.exports = function() {
+module.exports = function () {
   if (!module.exports.instance) {
     module.exports.instance = new ARTIK530Thing();
   }
+
   return module.exports.instance;
 };

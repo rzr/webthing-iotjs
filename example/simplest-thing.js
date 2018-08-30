@@ -1,5 +1,6 @@
 // -*- mode: js; js-indent-level:2;  -*-
 // SPDX-License-Identifier: MPL-2.0
+
 /**
  *
  * Copyright 2018-present Samsung Electronics France SAS, and other contributors
@@ -15,6 +16,7 @@ try {
 } catch (err) {
   webthing = require('webthing');
 }
+
 const Property = webthing.Property;
 const SingleThing = webthing.server.SingleThing;
 const Thing = webthing.Thing;
@@ -22,34 +24,25 @@ const Value = webthing.Value;
 const WebThingServer = webthing.server.WebThingServer;
 
 function makeThing() {
-  const thing = new Thing('ActuatorExample',
-                          ['OnOffSwitch'],
-                          'An actuator example that just log');
-
-  thing.addProperty(
-    new Property(thing,
-                 'on',
-                 new Value(true, (update) => console.log(`change: ${update}`)),
-                 {
-                   '@type': 'OnOffProperty',
-                   label: 'On/Off',
-                   type: 'boolean',
-                   description: 'Whether the output is changed',
-                 }));
+  const thing = new Thing('ActuatorExample', ['OnOffSwitch'], 'An actuator example that just log');
+  thing.addProperty(new Property(thing, 'on', new Value(true, update => console.log(`change: ${update}`)), {
+    '@type': 'OnOffProperty',
+    label: 'On/Off',
+    type: 'boolean',
+    description: 'Whether the output is changed'
+  }));
   return thing;
 }
 
 function runServer() {
   const port = process.argv[2] ? Number(process.argv[2]) : 8888;
   const url = `http://localhost:${port}/properties/on`;
-
   console.log(`Usage:\n
 ${process.argv[0]} ${process.argv[1]} [port]
 
 Try:
 curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' ${url}
 `);
-
   const thing = makeThing();
   const server = new WebThingServer(new SingleThing(thing), port);
   process.on('SIGINT', () => {
