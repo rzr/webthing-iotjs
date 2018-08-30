@@ -9,7 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-let webthing;
+var webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -17,12 +17,12 @@ try {
   webthing = require('webthing');
 }
 
-const Thing = webthing.Thing;
+var Thing = webthing.Thing;
 
-const GpioProperty = require('../gpio/gpio-property');
+var GpioProperty = require('../gpio/gpio-property');
 
 function PlayPHatThing(name, type, description) {
-  const _this = this;
+  var _this = this;
 
   Thing.call(this, name || 'PlayPHat', type || [], description || 'A web connected Play RaspberryPi Hat');
   {
@@ -67,13 +67,13 @@ function PlayPHatThing(name, type, description) {
       direction: 'in',
       pin: 6
     })];
-    this.gpioProperties.forEach(property => {
+    this.gpioProperties.forEach(function (property) {
       _this.addProperty(property);
     });
   }
 
-  this.close = () => {
-    _this.gpioProperties.forEach(property => {
+  this.close = function () {
+    _this.gpioProperties.forEach(function (property) {
       property.close && property.close();
     });
   };

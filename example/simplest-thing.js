@@ -9,7 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-let webthing;
+var webthing;
 
 try {
   webthing = require('../webthing');
@@ -17,15 +17,17 @@ try {
   webthing = require('webthing');
 }
 
-const Property = webthing.Property;
-const SingleThing = webthing.server.SingleThing;
-const Thing = webthing.Thing;
-const Value = webthing.Value;
-const WebThingServer = webthing.server.WebThingServer;
+var Property = webthing.Property;
+var SingleThing = webthing.server.SingleThing;
+var Thing = webthing.Thing;
+var Value = webthing.Value;
+var WebThingServer = webthing.server.WebThingServer;
 
 function makeThing() {
-  const thing = new Thing('ActuatorExample', ['OnOffSwitch'], 'An actuator example that just log');
-  thing.addProperty(new Property(thing, 'on', new Value(true, update => console.log(`change: ${update}`)), {
+  var thing = new Thing('ActuatorExample', ['OnOffSwitch'], 'An actuator example that just log');
+  thing.addProperty(new Property(thing, 'on', new Value(true, function (update) {
+    return console.log("change: ".concat(update));
+  }), {
     '@type': 'OnOffProperty',
     label: 'On/Off',
     type: 'boolean',
@@ -35,17 +37,12 @@ function makeThing() {
 }
 
 function runServer() {
-  const port = process.argv[2] ? Number(process.argv[2]) : 8888;
-  const url = `http://localhost:${port}/properties/on`;
-  console.log(`Usage:\n
-${process.argv[0]} ${process.argv[1]} [port]
-
-Try:
-curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' ${url}
-`);
-  const thing = makeThing();
-  const server = new WebThingServer(new SingleThing(thing), port);
-  process.on('SIGINT', () => {
+  var port = process.argv[2] ? Number(process.argv[2]) : 8888;
+  var url = "http://localhost:".concat(port, "/properties/on");
+  console.log("Usage:\n\n".concat(process.argv[0], " ").concat(process.argv[1], " [port]\n\nTry:\ncurl -X PUT -H 'Content-Type: application/json' --data '{\"on\": true }' ").concat(url, "\n"));
+  var thing = makeThing();
+  var server = new WebThingServer(new SingleThing(thing), port);
+  process.on('SIGINT', function () {
     server.stop();
     process.exit();
   });

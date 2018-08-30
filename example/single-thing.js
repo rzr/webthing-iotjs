@@ -1,4 +1,4 @@
-let webthing;
+var webthing;
 
 try {
   webthing = require('../webthing');
@@ -6,21 +6,21 @@ try {
   webthing = require('webthing');
 }
 
-const Property = webthing.Property;
-const SingleThing = webthing.server.SingleThing;
-const Thing = webthing.Thing;
-const Value = webthing.Value;
-const WebThingServer = webthing.server.WebThingServer;
+var Property = webthing.Property;
+var SingleThing = webthing.server.SingleThing;
+var Thing = webthing.Thing;
+var Value = webthing.Value;
+var WebThingServer = webthing.server.WebThingServer;
 
 function makeThing() {
-  const thing = new Thing('My Lamp', ['OnOffSwitch', 'Light'], 'A web connected lamp');
-  thing.addProperty(new Property(thing, 'on', new Value(true, () => {}), {
+  var thing = new Thing('My Lamp', ['OnOffSwitch', 'Light'], 'A web connected lamp');
+  thing.addProperty(new Property(thing, 'on', new Value(true, function () {}), {
     '@type': 'OnOffProperty',
     label: 'On/Off',
     type: 'boolean',
     description: 'Whether the lamp is turned on'
   }));
-  thing.addProperty(new Property(thing, 'brightness', new Value(50, () => {}), {
+  thing.addProperty(new Property(thing, 'brightness', new Value(50, function () {}), {
     '@type': 'BrightnessProperty',
     label: 'Brightness',
     type: 'number',
@@ -33,11 +33,11 @@ function makeThing() {
 }
 
 function runServer() {
-  const thing = makeThing(); // If adding more than one thing, use MultipleThings() with a name.
+  var thing = makeThing(); // If adding more than one thing, use MultipleThings() with a name.
   // In the single thing case, the thing's name will be broadcast.
 
-  const server = new WebThingServer(new SingleThing(thing), 8888);
-  process.on('SIGINT', () => {
+  var server = new WebThingServer(new SingleThing(thing), 8888);
+  process.on('SIGINT', function () {
     server.stop();
     process.exit();
   });
