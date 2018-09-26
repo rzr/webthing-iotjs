@@ -52,7 +52,7 @@ Try:\ncurl -H "Accept: application/json" ${url}\
     };
     server.stop().then(cleanup).catch(cleanup);
   });
-  server.start().catch(console.error);
+  server.start();
   log(`log: board: ${board}: Started`);
 }
 
