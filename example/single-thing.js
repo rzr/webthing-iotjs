@@ -51,7 +51,7 @@ function runServer() {
     server.stop().then(() => process.exit()).catch(() => process.exit());
   });
 
-  server.start().catch(console.error);
+  server.start();
 }
 
 runServer();
