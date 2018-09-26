@@ -56,7 +56,7 @@ curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' ${url}
   process.on('SIGINT', () => {
     server.stop().then(() => process.exit()).catch(() => process.exit());
   });
-  server.start().catch(console.error);
+  server.start();
 }
 
 runServer();
