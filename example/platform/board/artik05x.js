@@ -19,6 +19,7 @@ try {
 
 const Thing = webthing.Thing;
 
+const AdcProperty = require('../adc/adc-property');
 const GpioProperty = require('../gpio/gpio-property');
 
 function ARTIK05xThing(name, type, description) {
@@ -49,6 +50,18 @@ function ARTIK05xThing(name, type, description) {
     }, {
       direction: 'in',
       pin: 44,
+    }), new AdcProperty(this, 'ADC1', 0, {
+      description: 'Analog port of ARTIK05x',
+    }, {
+      device: '/dev/adc0',
+      direction: 'in',
+      pin: 0,
+    }), new AdcProperty(this, 'ADC2', 0, {
+      description: 'Analog port of ARTIK05x',
+    }, {
+      device: '/dev/adc0',
+      direction: 'in',
+      pin: 1,
     })];
     this.pinProperties.forEach((property) => {
       self.addProperty(property);
