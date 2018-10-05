@@ -15,6 +15,11 @@ tmp_dir ?= tmp
 runtime ?= iotjs
 export runtime
 eslint ?= node_modules/eslint/bin/eslint.js
+babel ?= ./node_modules/.bin/babel
+babelrc ?= ${CURDIR}/extra/${runtime}/.babelrc
+babel_stamp_file += ${CURDIR}/extra/${runtime}/babel.txt
+babel_out_dir ?= tmp/babel/runtime/${runtime}/dist
+srcs_dir ?= lib example
 srcs ?= $(wildcard *.js lib/*.js | sort | uniq)
 run_args ?=
 run_timeout ?= 10
@@ -108,6 +113,9 @@ check/npm:
 
 check: check/${runtime}
 
+git/commit/%:
+	-git commit -am "${runtime}: WIP: About to do something (${@})"
+
 eslint: .eslintrc.js ${eslint}
 	@rm -rf tmp/dist
 	${eslint} --no-color --fix . ||:
@@ -124,13 +132,94 @@ ${eslint}:
 .eslintrc.js: ${eslint}
 	ls $@ || $< --init
 
-
 lint/%: eslint
 	sync
 
 lint: lint/${runtime}
 	sync
 
+### Babel
+#	
+
+babel/setup: Makefile
+	ls node_modules || ${MAKE} node_modules
+	-git commit -am "WIP: babel: About to setup"
+	npm install @babel/cli
+	npm install @babel/core
+	npm install @babel/plugin-transform-arrow-functions
+	npm install @babel/plugin-transform-block-scoping
+	npm install @babel/plugin-transform-template-literals
+	@echo "TODO: npm install @babel/plugin-transform-for-of"
+	@echo "TODO: npm install @babel/plugin-transform-classes"
+	npm install @babel/preset-env
+	-git commit -am "WIP: babel: Installed tools"
+
+${babel}:
+	ls $@ || ${MAKE} babel/setup
+
+${babelrc}: ${babel}
+	ls $@ || echo '{ "ignore": [ "node_modules/**.js" ] }' > $@
+	cat $@
+
+${babel_out_dir}: ${babelrc} ${babel}
+	${babel} \
+ --no-babelrc \
+ --config-file "$<" \
+ --delete-dir-on-start \
+ --ignore 'node_modules/**,dist/**' \
+ -d "${CURDIR}/$@/" \
+ --verbose \
+ .
+	ls ${babel_out_dir}
+
+babel/build: ${babel_out_dir}
+	rsync -avx $</ ./
+	@rm -rf $<
+
+${babel_stamp_file}: ${srcs_dir}
+	${MAKE} babel/build
+	${babel} --version | tee ${babel_stamp_file}
+
+babel/runtime/%: ${babel_stamp_file}
+	ls $<
+
+babel/commit/%:	git/commit/babel/build/${runtime}
+	${MAKE} babel/runtime/${runtime}
+	-git commit -m "${runtime}: babel: Transpiled (${@})" ${srcs_dir} ${srcs}
+	-git add "${babel_stamp_file}"
+	-git commit -m "${runtime}: babel: Add stamp file" "${babel_stamp_file}"
+
+babel: babel/commit/${runtime}
+	sync
+
+babel/done:
+	ls ${babel_stamp_file} && exit 0 || echo "log: Assuming it is not transpiled yet"
+	ls ${babel_stamp_file} || ${MAKE} ${@D}
+	ls ${babel_stamp_file}
+
+babel/clean:
+	rm -rf ${babel_out_dir}
+
+babel/rebuild: babel/clean babel/build
+
+
+transpile/revert:
+	@echo "TODO: move $@ patch and ${runtime} port at end of list"
+	-git commit -am "WIP: babel: About to $@"
+	git rebase -i remotes/upstream/master
+	git revert HEAD
+	git revert HEAD~2
+
+lint/eslint:
+	if [ ! -e ${babel_stamp_file} ] ; then make eslint ; fi
+
+lint/babel:
+	if [ -e ${babel_stamp_file} ] ; then make babel ; fi
+
+transpile: git/commit/transpile/${runtime} lint babel
+
+retranspile: babel/done transpile/revert eslint babel
+	git rebase -i remotes/upstream/master
 
 ### IoT.js related rules:
 
@@ -139,6 +228,14 @@ setup/iotjs:
  || echo "log: Should have printed iotjs's usage..."
 	-which iotjs
 
-build/iotjs: setup
+build/iotjs: setup ${babel_stamp_file}
 	echo "log: $@: $^"
 
+lint/iotjs: lint/eslint lint/babel
+
+#babel/runtime/iotjs:
+#	${MAKE} babel/runtime/node
+#	${MAKE} babel/runtime/iotjs
+
+babel/runtimes: babel/runtime/iotjs babel/runtime/node
+	-sync
