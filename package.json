@@ -1,41 +1,37 @@
 {
-  "name": "webthing",
+  "name": "webthing-iotjs",
   "version": "0.7.0",
-  "description": "HTTP Web Thing implementation",
+  "description": "HTTP Web Thing implementation ported for IoT.js",
   "main": "webthing.js",
   "scripts": {
     "lint": "eslint .",
-    "start": "NODE_PATH=. node example/multiple-things",
+    "start": "iotjs example/multiple-things",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-iot/webthing-node.git"
+    "url": "git+https://github.com/rzr/webthing-iotjs.git"
   },
   "keywords": [
     "mozilla",
     "iot",
     "web",
     "thing",
-    "webthing"
+    "webthing",
+    "iotjs",
+    "iotjs-supported",
+    "iotjs-module"
   ],
-  "author": "Mozilla IoT",
+  "author": "Philippe Coval",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/mozilla-iot/webthing-node/issues"
+    "url": "https://github.com/rzr/webthing-iotjs/issues"
   },
-  "homepage": "https://github.com/mozilla-iot/webthing-node#readme",
+  "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
-    "ajv": "^6.5.2",
-    "body-parser": "^1.18.3",
-    "dnssd": "^0.4.1",
-    "express": "^4.16.3",
-    "express-ws": "^4.0.0",
-    "local-ipv4-address": "^0.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
-    "eslint": "^4.19.1",
-    "uuid": "^3.3.2"
+    "eslint": "^4.19.1"
   }
 }
