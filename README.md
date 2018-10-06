@@ -27,13 +27,23 @@ which is just simulating an actuator (LED, switch, relay...).
 ```
 iotjs -h
 
+iotjs example/multiple-things.js 
+# setting new humidity level: 18.207531485648474
+
+curl T -H 'Content-Type: application/json'  http://localhost:8888/
+# [{"name":"My Lamp","href":"/0", (...)  "href":"/1/properties/level"} .. (...) }]
+
+curl T -H 'Content-Type: application/json'  http://$HOSTNAME:8888/1/properties/level
+# {"level":42.666}
+
+
 iotjs example/simplest-thing.js 
 # Usage:
 # 
 # iotjs example/simplest-thing.js [port]
-# 
-# Try:
-# curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' http://localhost:8888/properties/on
+
+curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' http://localhost:8888/properties/on
+# {"on":true}
 ```
 
 Then thing can be connected to Mozilla IoT gateway using the Thing Web URL adapter.
@@ -55,4 +65,4 @@ For more insights and details please guide:
 
 ## LICENSE: ##
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fmastodon-lite.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fmastodon-lite?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_large)
