@@ -12,5 +12,7 @@ node_js:
     - "10"
     - "11"
     - "12"
+services:
+  docker
 script:
-    - ./travis.sh
+  - docker build .
