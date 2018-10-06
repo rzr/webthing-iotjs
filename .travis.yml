@@ -1,18 +1,9 @@
-language: node_js
 sudo: required
-addons:
-    apt:
-        packages:
-            - python3
-            - python3-dev
-node_js:
-    - "8"
-    - "9"
-    - "10"
-    - "11"
-before_script:
-    - wget https://bootstrap.pypa.io/get-pip.py
-    - sudo python3 get-pip.py
-    - rm get-pip.py
+language: node_js
+dist: trusty
+
+services:
+  docker
+
 script:
-    - ./travis.sh
+  - docker build .
