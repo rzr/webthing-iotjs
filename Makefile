@@ -188,9 +188,12 @@ ${babel_out_dir}: ${babelrc} ${babel}
  .
 	ls ${babel_out_dir}
 
-babel/build: ${babel_out_dir}
-	rsync -avx $</ ./
-	@rm -rf $<
+babel/run: ${babel_out_dir}
+	ls $<
+
+babel/build: babel/run
+	rsync -avx ${babel_out_dir}/ ./
+	@rm -rf ${babel_out_dir}
 
 ${babel_stamp_file}: ${srcs_dir}
 	${MAKE} babel/build
@@ -199,18 +202,22 @@ ${babel_stamp_file}: ${srcs_dir}
 babel/runtime/%: ${babel_stamp_file}
 	ls $<
 
+babel/runtime: babel/runtime/${runtime}
+
 babel/commit/%:	git/commit/babel/build/${runtime}
 	${MAKE} babel/runtime/${runtime}
 	-git commit -m "${runtime}: babel: Transpiled (${@})" ${srcs_dir} ${srcs}
 	-git add "${babel_stamp_file}"
 	-git commit -m "${runtime}: babel: Add stamp file" "${babel_stamp_file}"
 
-babel: babel/commit/${runtime}
+babel/commit: babel/commit/${runtime}
+
+babel: babel/runtime
 	sync
 
 babel/done:
 	ls ${babel_stamp_file} && exit 0 || echo "log: Assuming it is not transpiled yet"
-	ls ${babel_stamp_file} || ${MAKE} ${@D}
+	ls ${babel_stamp_file} || ${MAKE} ${@D}/commit
 	ls ${babel_stamp_file}
 
 babel/clean:
@@ -220,34 +227,40 @@ babel/rebuild: babel/clean babel/build
 
 
 transpile/revert:
-	@echo "TODO: move $@ patch and ${runtime} port at end of list"
+	@echo "TODO: move $@ (babel) patches (2) for ${runtime} at end of list"
 	-git commit -am "WIP: babel: About to $@"
 	git rebase -i remotes/upstream/master
 	git revert HEAD
 	git revert HEAD~2
 
-lint/eslint:
-	if [ ! -e ${babel_stamp_file} ] ; then make eslint ; fi
+transpile: git/commit/transpile/${runtime} lint/${runtime} babel/commit
 
-lint/babel:
-	if [ -e ${babel_stamp_file} ] ; then make babel ; fi
-
-transpile: git/commit/transpile/${runtime} lint babel
-
-retranspile: babel/done transpile/revert eslint babel
+retranspile: babel/done transpile/revert
+	${MAKE} transpile
 	git rebase -i remotes/upstream/master
 
+
 ### IoT.js related rules:
+
+setup/iotjs/devel: ${eslint} ${babel}
 
 setup/iotjs:
 	iotjs \
  || echo "log: Should have printed iotjs's usage..."
 	-which iotjs
 
-build/iotjs: setup ${babel_stamp_file}
+build/iotjs/devel: setup lint ${babel_stamp_file}
 	echo "log: $@: $^"
 
-lint/iotjs: lint/eslint lint/babel
+build/iotjs: setup babel/done
+
+lint/iotjs/eslint:
+	if [ ! -e ${babel_stamp_file} ] ; then make eslint ; fi
+
+lint/iotjs/babel:
+	if [ -e ${babel_stamp_file} ] ; then make babel/run ; fi
+
+lint/iotjs: lint/iotjs/eslint lint/iotjs/babel
 
 #babel/runtime/iotjs:
 #	${MAKE} babel/runtime/node
