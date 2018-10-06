@@ -30,14 +30,14 @@
     "url": "https://github.com/rzr/webthing-iotjs/issues"
   },
   "homepage": "https://github.com/rzr/webthing-iotjs#readme",
-  "dependencies": {
-    "ajv": "^6.6.1",
-    "body-parser": "^1.18.3",
-    "dnssd": "^0.4.1",
-    "express": "^4.16.4",
-    "express-ws": "^4.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/plugin-transform-block-scoping": "^7.1.5",
+    "@babel/plugin-transform-template-literals": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.9.0"
   }
