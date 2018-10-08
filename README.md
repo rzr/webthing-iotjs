@@ -1,7 +1,7 @@
 # WEBTHING-IOTJS #
 
-[![license](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE)
 [![GitHub forks](https://img.shields.io/github/forks/rzr/webthing-iotjs.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/rzr/webthing-iotjs/network/)
+[![license](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/rzr/webthing-iotjs.svg?branch=master)](https://travis-ci.org/rzr/webthing-iotjs)
 [![NPM](https://img.shields.io/npm/v/webthing-iotjs.svg)](https://www.npmjs.com/package/webthing-iotjs)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_shield)
@@ -21,8 +21,8 @@ and then should land here (once rebased on webthing-node's master branch).
 ## BASIC USAGE: ##
 
 After installing IoT.js program on your system,
-you can get started by running the "Simplest Thing"
-which is just simulating an actuator (LED, switch, relay...).
+you can get started by running example program
+
 
 ```
 iotjs -h
@@ -35,8 +35,13 @@ curl T -H 'Content-Type: application/json'  http://localhost:8888/
 
 curl T -H 'Content-Type: application/json'  http://$HOSTNAME:8888/1/properties/level
 # {"level":42.666}
+```
+Then thing can be monitored once connected to Mozilla IoT gateway using the Thing Web URL adapter.
 
+Also you can control a "Simplest Thing"
+which is just simulating an actuator (LED, switch, relay...).
 
+```
 iotjs example/simplest-thing.js 
 # Usage:
 # 
@@ -46,7 +51,7 @@ curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' http://lo
 # {"on":true}
 ```
 
-Then thing can be connected to Mozilla IoT gateway using the Thing Web URL adapter.
+Then this thing can be connected to gateway, and rules configured to use the actuator.
 
 
 ## GUIDE: ##
