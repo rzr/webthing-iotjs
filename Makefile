@@ -36,6 +36,7 @@ help:
 	@echo "## Usage: "
 	@echo "# make start # To start default application"
 	@echo "# make test # To test default application"
+	@echo "# make retranspile # To convert source"
 
 all: build
 
