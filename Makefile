@@ -29,6 +29,10 @@ NODE_PATH := .:${NODE_PATH}
 export NODE_PATH
 
 
+help:
+	@echo "## Usage: "
+	@echo "# make retranspile"
+
 all: build
 
 setup/%:
