@@ -15,10 +15,15 @@ const console = require('console');
 // TODO: disable logs here by editing to '!console.log'
 const log = console.log || function() {};
 
-const {
-  SingleThing,
-  WebThingServer,
-} = require('webthing');
+let webthing;
+
+try {
+  webthing = require('../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
+const WebThingServer = webthing.WebThingServer;
+const SingleThing = webthing.SingleThing;
 
 // Update with different board here if needed
 let board = 'artik530';
