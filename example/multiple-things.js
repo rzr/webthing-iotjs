@@ -7,10 +7,10 @@ try {
   webthing = require('webthing-iotjs');
 }
 const Property = webthing.Property;
-const MultipleThings = webthing.server.MultipleThings;
+const MultipleThings = webthing.MultipleThings;
 const Thing = webthing.Thing;
 const Value = webthing.Value;
-const WebThingServer = webthing.server.WebThingServer;
+const WebThingServer = webthing.WebThingServer;
 
 /**
  * A dimmable light that logs received commands to stdout.
