@@ -16,10 +16,10 @@ try {
   webthing = require('webthing');
 }
 const Property = webthing.Property;
-const SingleThing = webthing.server.SingleThing;
+const SingleThing = webthing.SingleThing;
 const Thing = webthing.Thing;
 const Value = webthing.Value;
-const WebThingServer = webthing.server.WebThingServer;
+const WebThingServer = webthing.WebThingServer;
 
 function makeThing() {
   const thing = new Thing('ActuatorExample',
