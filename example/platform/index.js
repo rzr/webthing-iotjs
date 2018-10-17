@@ -22,8 +22,8 @@ try {
 } catch (err) {
   webthing = require('webthing');
 }
-const WebThingServer = webthing.server.WebThingServer;
-const SingleThing = webthing.server.SingleThing;
+const WebThingServer = webthing.WebThingServer;
+const SingleThing = webthing.SingleThing;
 
 // Update with different board here if needed
 let board = 'artik530';
