@@ -1,0 +1,13 @@
+[Unit]
+Description=webthing-iotjs
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/usr/local/src/webthing-iotjs
+ExecStart=/usr/local/src/webthing-iotjs/tools/systemd/webthing-iotjs.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
