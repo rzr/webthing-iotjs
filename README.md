@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/rzr/webthing-iotjs.svg?branch=master)](https://travis-ci.org/rzr/webthing-iotjs)
 [![NPM](https://img.shields.io/npm/v/webthing-iotjs.svg)](https://www.npmjs.com/package/webthing-iotjs)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_shield)
+[![IRC Channel](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://kiwiirc.com/client/irc.freenode.net/#tizen)
 
 
 ## DISCLAIMER: ##
