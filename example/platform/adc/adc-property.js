@@ -29,8 +29,7 @@ const adc = require('adc');
 
 function AdcInProperty(thing, name, value, metadata, config) {
   const self = this;
-  const valueObject = new Value(Number(value));
-  Property.call(this, thing, name, valueObject, {
+  Property.call(this, thing, name, new Value(Number(value), {
     '@type': 'LevelProperty',
     label: (metadata && metadata.label) || `Level: ${name}`,
     type: 'number',
