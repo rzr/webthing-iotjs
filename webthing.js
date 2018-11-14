@@ -8,5 +8,5 @@ module.exports = {
 };
 
 module.exports.MultipleThings = module.exports.server.MultipleThings;
-module.exports.SingleThing  = module.exports.server.SingleThing;
+module.exports.SingleThing = module.exports.server.SingleThing;
 module.exports.WebThingServer = module.exports.server.WebThingServer;
