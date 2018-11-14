@@ -147,14 +147,14 @@ lint: lint/${runtime}
 babel/setup: Makefile
 	ls node_modules || ${MAKE} node_modules
 	-git commit -sam "WIP: babel: About to setup"
-	npm install @babel/cli
-	npm install @babel/core
-	npm install @babel/plugin-transform-arrow-functions
-	npm install @babel/plugin-transform-block-scoping
-	npm install @babel/plugin-transform-template-literals
+	npm install --save-dev @babel/cli
+	npm install --save-dev @babel/core
+	npm install --save-dev @babel/plugin-transform-arrow-functions
+	npm install --save-dev @babel/plugin-transform-block-scoping
+	npm install --save-dev @babel/plugin-transform-template-literals
 	@echo "TODO: npm install @babel/plugin-transform-for-of"
 	@echo "TODO: npm install @babel/plugin-transform-classes"
-	npm install @babel/preset-env
+	npm install --save-dev @babel/preset-env
 	-git commit -sam "WIP: babel: Installed tools"
 
 ${babel}:
