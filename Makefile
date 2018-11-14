@@ -114,7 +114,7 @@ check/npm:
 check: check/${runtime}
 
 git/commit/%:
-	-git commit -am "${runtime}: WIP: About to do something (${@})"
+	-git commit -sam "${runtime}: WIP: About to do something (${@})"
 
 eslint: .eslintrc.js ${eslint}
 	@rm -rf tmp/dist
@@ -142,7 +142,7 @@ lint: lint/${runtime}
 
 babel/setup: Makefile
 	ls node_modules || ${MAKE} node_modules
-	-git commit -am "WIP: babel: About to setup"
+	-git commit -sam "WIP: babel: About to setup"
 	npm install @babel/cli
 	npm install @babel/core
 	npm install @babel/plugin-transform-arrow-functions
@@ -151,7 +151,7 @@ babel/setup: Makefile
 	@echo "TODO: npm install @babel/plugin-transform-for-of"
 	@echo "TODO: npm install @babel/plugin-transform-classes"
 	npm install @babel/preset-env
-	-git commit -am "WIP: babel: Installed tools"
+	-git commit -sam "WIP: babel: Installed tools"
 
 ${babel}:
 	ls $@ || ${MAKE} babel/setup
@@ -189,9 +189,9 @@ babel/runtime: babel/runtime/${runtime}
 
 babel/commit/%:	git/commit/babel/build/${runtime}
 	${MAKE} babel/runtime/${runtime}
-	-git commit -m "${runtime}: babel: Transpiled (${@})" ${srcs_dir} ${srcs}
+	-git commit -sm "${runtime}: babel: Transpiled (${@})" ${srcs_dir} ${srcs}
 	-git add "${babel_stamp_file}"
-	-git commit -m "${runtime}: babel: Add stamp file" "${babel_stamp_file}"
+	-git commit -sm "${runtime}: babel: Add stamp file" "${babel_stamp_file}"
 
 babel/commit: babel/commit/${runtime}
 
@@ -211,7 +211,7 @@ babel/rebuild: babel/clean babel/build
 
 transpile/revert:
 	@echo "TODO: move $@ (babel) patches (2) for ${runtime} at end of list"
-	-git commit -am "WIP: babel: About to $@"
+	-git commit -sam "WIP: babel: About to $@"
 	git rebase -i remotes/upstream/master
 	git revert HEAD
 	git revert HEAD~2
