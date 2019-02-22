@@ -23,24 +23,23 @@ try {
   webthing = require('webthing-iotjs');
 }
 const Property = webthing.Property;
-const Value = webthing.Value;);
+const Value = webthing.Value;
 
+const adc = require('adc');
 
-const adc = require('../adc');
-
-class AdcInProperty extends Property {
-  constructor(thing, name, value, metadata, config) {
-    super(thing, name, new Value(Number(value)),
-          {
-            '@type': 'LevelProperty',
-            title: (metadata && metadata.title) || `Level: ${name}`,
-            type: 'number',
-            readOnly: true,
-            description:
-            (metadata && metadata.description) ||
-              (`ADC Sensor on pin=${config.pin}`),
-          });
-    const self = this;
+function AdcInProperty(thing, name, value, metadata, config) {
+  const self = this;
+  const valueObject = new Value(Number(value));
+  Property.call(this, thing, name, valueObject, {
+    '@type': 'LevelProperty',
+    label: (metadata && metadata.label) || `Level: ${name}`,
+    type: 'number',
+    readOnly: true,
+    description:
+    (metadata && metadata.description) ||
+      (`ADC Sensor on pin=${config.pin}`),
+  });
+  {
     config.frequency = config.frequency || 1;
     config.range = config.range || 0xFFF;
     this.period = 1000.0 / config.frequency;
@@ -48,7 +47,7 @@ class AdcInProperty extends Property {
     this.port = adc.open(config, (err) => {
       log(`log: ADC: ${self.getName()}: open: ${err} (null expected)`);
       if (err) {
-        console.error(`errror: ADC: ${self.getName()}: Fail to open:\
+        console.error(`error: ADC: ${self.getName()}: Fail to open:\
  ${config.pin}`);
         return null;
       }
@@ -66,7 +65,7 @@ class AdcInProperty extends Property {
     });
   }
 
-  close() {
+  self.close = () => {
     try {
       this.inverval && clearInterval(this.inverval);
       this.port && this.port.closeSync();
@@ -76,6 +75,8 @@ class AdcInProperty extends Property {
     }
     log(`log: ADC: ${this.getName()}: close:`);
   }
+
+  return this;
 }
 
 function AdcProperty(thing, name, value, metadata, config) {
