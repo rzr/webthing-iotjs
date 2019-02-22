@@ -85,6 +85,7 @@ function FakeGpioHumiditySensor() {
              'A web connected humidity sensor'
   );
 
+  {
     this.level = new Value(0.0);
     this.addProperty(
       new Property(
