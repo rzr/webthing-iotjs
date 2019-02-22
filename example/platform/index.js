@@ -40,12 +40,13 @@ Try:\ncurl -H "Accept: application/json" ${url}\
   const thing = new BoardThing();
   const server = new WebThingServer(new SingleThing(thing), port);
   process.on('SIGINT', () => {
-    server.stop().then(cleanup).catch(cleanup);
+    server.stop();
     const cleanup = () => {
       thing && thing.close();
       log(`log: board: ${board}: Stopped`);
       process.exit();
     };
+    cleanup();
   });
   server.start();
   log(`log: board: ${board}: Started`);
