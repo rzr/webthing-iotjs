@@ -64,6 +64,9 @@ run/npm: ${main_src} setup
 
 run: run/${runtime}
 
+node/run:
+	${MAKE} run/${@D} runtime=${@D}
+
 clean:
 	rm -rf ${tmp_dir}
 
