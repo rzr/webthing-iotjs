@@ -10,3 +10,11 @@ services:
   docker
 script:
   - docker build .
+deploy:
+  provider: npm
+  email: rzr@users.sf.net
+  api_key:
+    secure: Lde4YRt/uAZJl/G2p9Bafpa56vp7Od6DcDCJGTL1ifWugSeCWGCL/AA8FO6It0AAEghZa2iVdjF0Zufwb3hBbKsM90KEPKsEdrJ8eXs8Y+bSUAi+iYlHZ+4tSNFfuEnyibru1eEca0u37VKdKijwF3hWlAQ6NtAWGqWCt065uhD5l5adahoD/KnCwXtdoBmBwBqF70wIZb3L6lhsumE6xJtiFxs5zYcY1RkYpEKLBL3+qrs6psn64NuK0U0+a2YTYO5Md5BN6p4nZDb3SR93RJmmdzmVpMCxfibzme5tqghJX7/6I3mxkS9vitiNE1ueRYuwfAcyoeErUETjYvIF5cWm5JUn4xepmkYfalF2FfUUZ/bIy9rQW+5o1LsSggdd0xZZzXsVU9mo3TAMz0HylW7/5Ao0HaxYmZ2EJFDAG+Rws5lKcK7s8q0JJvFvhW34zb3bN5d4b+NxmUrsphOR21iKkCYadJa9HmSy+teNkWANTxraeQaGEJpw/4KfsQA9mknurnvGy5rbgNLegO7xHs9l4dZLvov99bvnsJOgUsfBQuwMXZ1YtGotUYKwtPkmZ/bTNU+GNsKb//mYZIuJo1lMWdVQs+A7pp4zROCoOXcoOrcGILVwdO/NxX6kW4k/vF1obubadVYgtSfDoavEClIh3Vs+x6oEGINtHK2QvgM=
+  on:
+    tags: true
+    repo: rzr/webthing-iotjs
