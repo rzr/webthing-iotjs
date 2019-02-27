@@ -28,9 +28,12 @@ main_src ?= example/multiple-things.js
 NODE_PATH := .:${NODE_PATH}
 export NODE_PATH
 
+iotjs_modules_dir?=${CURDIR}/iotjs_modules
+
 iotjs-express_url?=https://github.com/rzr/iotjs-express
 iotjs-express_revision?=v0.0.2
-iotjs_modules_dirs+=iotjs_modules/iotjs-express
+iotjs_modules_dirs+=${iotjs_modules_dir}/iotjs-express
+
 
 help:
 	@echo "## Usage: "
@@ -241,12 +244,17 @@ retranspile: babel/done transpile/revert
 
 ### IoT.js related rules:
 
+prep: ${runtime}/modules
+	echo "log: $@: $^"
+
+#TODO install subdir
 iotjs/modules: ${iotjs_modules_dirs}
 	ls $<
 
-iotjs_modules/iotjs-express:
+${iotjs_modules_dir}/iotjs-express:
 	mkdir -p ${@D}
 	git clone --recursive --depth 1 ${iotjs-express_url} -b ${iotjs-express_revision} $@
+	-rm -rf ${@}/.git
 
 setup/iotjs/devel: ${eslint} ${babel}
 
