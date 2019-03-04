@@ -28,7 +28,8 @@ RUN echo "#log: Configuring locales" \
 RUN echo "#log: Setup system" \
   && set -x \
   && apt-get update -y \
-  && apt-get install -y sudo apt-transport-https make curl \
+  && apt-get install -y \
+     sudo apt-transport-https make curl git \
   && apt-get clean \
   && sync
 
