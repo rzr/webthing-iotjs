@@ -16,10 +16,15 @@ const console = require('console');
 const log = console.log || function() {};
 const verbose = !console.log || function() {};
 
-const {
-  Property,
-  Value,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
+const Property = webthing.Property;
+const Value = webthing.Value;);
+
 
 const adc = require('../adc');
 
