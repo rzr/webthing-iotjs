@@ -72,7 +72,9 @@ For more insights and details please follow guide about setting up gateway, iotj
 
 * https://github.com/mozilla-iot/webthing-node
 * https://github.com/rzr/webthing-iotjs/wiki
-* https://s-opensource.org/2018/06/21/webthing-iotjs/
+* https://github.com/rzr/webthing-iotjs/wiki/GnuLinux
+* https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs
+* https://libraries.io/npm/webthing-iotjs/
 
 
 ## LICENSE: ##
