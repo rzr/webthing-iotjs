@@ -10,9 +10,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
+const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 

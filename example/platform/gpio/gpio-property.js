@@ -15,10 +15,14 @@ const console = require('console');
 // Disable logs here by editing to '!console.log'
 const log = console.log || function() {};
 
-const {
-  Property,
-  Value,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
+const Property = webthing.Property;
+const Value = webthing.Value;
 
 const gpio = require('gpio');
 
