@@ -11,9 +11,7 @@
 
 default: help all
 
-# TODO: rename to webthing-iotjs
-project ?= webthing
-
+project ?= webthing-iotjs
 tmp_dir ?= tmp
 runtime ?= iotjs
 export runtime
@@ -70,6 +68,9 @@ modules: ${runtime}_modules
 
 node/modules: node_modules
 	ls $<
+
+modules: ${runtime}/modules
+	@echo "log: $@: $^"
 
 package-lock.json: package.json
 	rm -fv "$@"
@@ -134,11 +135,11 @@ test: test/${runtime}
 
 start: run
 
-start/board/%: example/platform/Makefile example/platform/board/%.js
+start/board/%: example/platform/Makefile example/platform/board/%.js modules
 	${MAKE} -C ${<D} board/${@F}
 
 check/%: ${lib_srcs}
-	${MAKE} setup
+	${MAKE} setup modules
 	@echo "log: SHELL=$${SHELL}"
 	status=0 ; \
  for src in $^; do \
