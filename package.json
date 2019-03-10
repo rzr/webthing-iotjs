@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/rzr/webthing-iotjs.git"
   },
+  "iotjs": {
+    "version": ">=1.0"
+  },
   "keywords": [
     "mozilla",
     "iot",
