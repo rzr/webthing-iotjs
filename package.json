@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "node": "NODE_PATH=. node",
-    "start": "make start",
+    "start": "NODE_PATH=. node example/multiple-things",
     "test": "make test",
     "simplest": "iotjs example/simplest-thing"
   },
