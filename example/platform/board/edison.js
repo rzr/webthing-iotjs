@@ -10,19 +10,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
 
 const PwmProperty = require('../pwm/pwm-property');
 
-class EdisonThing extends Thing {
-  constructor(name, type, description) {
-    super('urn:dev:ops:my-edison-1234',
+function EdisonThing(name, type, description) {
+  const self = this;
+  webthing.Thing.call(this,
           name || 'Edison',
           type || [],
           description || 'A web connected Edison');
-    const self = this;
+  {
     this.pinProperties = [
       new PwmProperty(this, 'PWM0', 50, {
         description: 'Analog port of Edison',
@@ -33,11 +36,13 @@ class EdisonThing extends Thing {
     });
   }
 
-  close() {
-    this.pinProperties.forEach((property) => {
+  this.close = () => {
+    self.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {
