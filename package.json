@@ -31,8 +31,8 @@
   },
   "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
-    "iotjs-express": "*",
-   },
+    "iotjs-express": "0.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
