@@ -15,19 +15,26 @@ const console = require('console');
 const log = console.log || function() {};
 const verbose = !console.log || function() {};
 
-const {
-  Property,
-  Value,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  console.log(err);
+  webthing = require('webthing-iotjs');
+}
 
 const pwm = require('pwm');
 
-class PwmOutProperty extends Property {
-  constructor(thing, name, value, metadata, config) {
-    if (typeof config === 'undefined') {
-      config = {};
-    }
-    super(thing, name, new Value(Number(value)),
+function PwmOutProperty(thing, name, value, metadata, config) {
+  const self = this;
+  if (typeof config === 'undefined') {
+    config = {};
+  }
+  webthing.Property.call(
+    this,
+    thing,
+    name || 'PwmOut',
+    new webthing.Value(Number(value)),
           {
             '@type': 'LevelProperty',
             title: (metadata && metadata.title) || `PWM: ${name} (dutyCycle)`,
@@ -40,7 +47,7 @@ class PwmOutProperty extends Property {
             (metadata && metadata.description) ||
               (`PWM DutyCycle`),
           });
-    const self = this;
+  {
     this.config = config;
     if (typeof this.config.pwm == 'undefined') {
       this.config.pwm = {};
@@ -61,48 +68,42 @@ class PwmOutProperty extends Property {
       this.config.pwm.dutyCycle = 0.5;
     }
     verbose(`log: opening: ${this.getName()}`);
-    this.port = pwm.export(
-      this.config.pwm.chip, this.config.pwm.pin,
-      (err) => {
-        verbose(`log: PWM: ${self.getName()}: open: ${err}`);
-        if (err) {
-          console.error(`error: PWM: ${self.getName()}: open: ${err}`);
-          throw err;
-        }
-        self.port.freq = 1 / self.config.pwm.period;
-        // Linux sysfs uses usecs units
-        self.port.setPeriod(
-          self.config.pwm.period * 1.E9,
-          () => {
-            self.port.setDutyCycle(
-              self.config.pwm.dutyCycle * (self.config.pwm.period * 1.E9),
-              () => {
-                self.port.setEnable(1, () => {
-                  verbose(`log: ${self.getName()}: Enabled`);
-                });
-              });
-          });
+    this.port = pwm.open(this.config.pwm,
+                         (err) => {
+                           verbose(`log: PWM: ${self.getName()}: open: ${err}`);
+                           if (err) {
+                             console.error(
+                               `error: PWM: ${self.getName()}: open: ${err}`);
+                             throw err;
+                           }
+                           self.port.freq = 1 / self.config.pwm.period;
+                           self.port.setFrequencySync(self.port.freq);
+                           self.port.setEnableSync(true);
 
-        self.value.valueForwarder = (value) => {
-          const usec = Math.floor((self.config.pwm.period * 1.E9) *
-                                  (Number(value) / 100.0));
-          self.port.setDutyCycle(usec, () => {
-            verbose(`log: setDutyCycle: usec=${usec}`);
-          });
-        };
-      });
+                           self.value.valueForwarder = (value) => {
+                             const ratio = ((Number(value) / 100.0));
+                             if (typeof self.config.pwm.convert !=
+            'undefined') {
+                               value = self.config.pwm.convert(value);
+                             }
+                             verbose(self.port.freq);
+                             self.port.setDutyCycleSync(Number(ratio));
+                           };
+                         });
   }
 
-  close() {
+  this.close = () => {
     verbose(`log: PWM: ${this.getName()}: close:`);
     try {
-      this.port && this.port.unexport();
+      self.port && self.port.closeSync();
     } catch (err) {
       console.error(`error: PWM: ${this.getName()} close:${err}`);
       return err;
     }
     log(`log: PWM: ${this.getName()}: close:`);
-  }
+  };
+
+  return this;
 }
 
 
