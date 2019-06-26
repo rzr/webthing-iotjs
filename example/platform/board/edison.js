@@ -9,19 +9,24 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
+let webthing;
 
-const {
-  Thing,
-} = require('webthing');
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
 
 const PwmProperty = require('../pwm/pwm-property');
 
-class EdisonThing extends Thing {
-  constructor(name, type, description) {
-    super(name || 'Edison',
-          type || [],
-          description || 'A web connected Edison');
-    const self = this;
+
+function EdisonThing(name, type, description) {
+  const self = this;
+  webthing.Thing.call(this,
+                      name || 'Edison',
+                      type || [],
+                      description || 'A web connected Edison');
+  {
     this.pinProperties = [
       new PwmProperty(this, 'PWM0', 50, {
         description: 'Analog port of Edison',
@@ -32,11 +37,13 @@ class EdisonThing extends Thing {
     });
   }
 
-  close() {
-    this.pinProperties.forEach((property) => {
+  this.close = () => {
+    self.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {
