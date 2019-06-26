@@ -240,7 +240,7 @@ babel/clean:
 	rm -rf ${babel_out_dir}
 
 babel/rebuild: babel/clean babel/build
-
+	sync
 
 transpile/revert:
 	@echo "TODO: move $@ (babel) patches (2) for ${runtime} at end of list"
