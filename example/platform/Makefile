@@ -90,6 +90,11 @@ package.json:
 ${topreldir}/node_modules: ${topreldir}/package.json
 	cd ${@D} && npm install
 
+iotjs_modules: ../../iotjs_modules
+	ln -fs $< $@
+
+../../iotjs_modules:
+	make -C ${@D} && make ${@F}
 
 check/%: ${lib_srcs}
 	${MAKE} setup
@@ -104,7 +109,7 @@ check/%: ${lib_srcs}
 
 check: check/${runtime}
 
-board/%: ${main_src} board/%.js /sys/class/gpio/export setup
+board/%: ${main_src} board/%.js /sys/class/gpio/export setup iotjs_modules
 	${runtime} $< ${@F}
 
 /sys/class/gpio/gpio${edison_gpio}: /sys/class/gpio/export
