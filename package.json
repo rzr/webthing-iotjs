@@ -37,12 +37,12 @@
     "iotjs-express": "0.0.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-transform-arrow-functions": "^7.0.0",
-    "@babel/plugin-transform-block-scoping": "^7.1.5",
-    "@babel/plugin-transform-template-literals": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-block-scoping": "^7.4.4",
+    "@babel/plugin-transform-template-literals": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0"
   }
