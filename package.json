@@ -12,20 +12,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WebThingsIO/webthing-node.git"
+    "url": "git+https://github.com/rzr/webthing-iotjs.git"
   },
   "keywords": [
     "iot",
     "web",
     "thing",
-    "webthing"
+    "webthing",
+    "iotjs",
+    "iotjs-supported",
+    "iotjs-module"
   ],
-  "author": "WebThingsIO",
+  "author": "Philippe Coval <rzr@users.sf.net> (https://www.npmjs.com/~rzr)",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/WebThingsIO/webthing-node/issues"
+    "url": "https://github.com/rzr/webthing-iotjs/issues"
   },
-  "homepage": "https://github.com/WebThingsIO/webthing-node#readme",
+  "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
     "ajv": "^6.12.5",
     "body-parser": "^1.19.0",
