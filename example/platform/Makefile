@@ -49,11 +49,6 @@ setup/node: ${topreldir}/node_modules node_modules
 	@echo "NODE_PATH=$${NODE_PATH}"
 	@echo "$@: $^"
 
-setup/iotjs:
-	echo "log: IoT.js's help expected to be printed"
-	${runtime} -h ||:
-	echo "$@: $^"
-
 run/%: /sys/class/gpio/export ${main_src} setup
 	ls -l $<
 	-which ${@F}
@@ -95,11 +90,9 @@ package.json:
 ${topreldir}/node_modules: ${topreldir}/package.json
 	cd ${@D} && npm install
 
-iotjs_modules: ../../iotjs_modules
-	ln -fs $< $@
+modules: ${runtime}_modules
+	ls $<
 
-../../iotjs_modules:
-	make -C ${@D} && make ${@F}
 
 check/%: ${lib_srcs}
 	${MAKE} setup
@@ -114,7 +107,7 @@ check/%: ${lib_srcs}
 
 check: check/${runtime}
 
-board/%: ${main_src} board/%.js /sys/class/gpio/export setup iotjs_modules
+board/%: ${main_src} board/%.js /sys/class/gpio/export setup modules
 	${runtime} $< ${@F}
 
 /sys/class/gpio/gpio${edison_gpio}: /sys/class/gpio/export
@@ -149,3 +142,15 @@ traffic-phat/%: ${main_src} gpio
  ${sudo} ${gpio} unexport $${num} ; \
  done
 	${MAKE} run/${@F} run_args="${@D}"
+
+### IoT.js related rules:
+setup/iotjs: iotjs_modules
+	echo "log: IoT.js's help expected to be printed"
+	${runtime} -h ||:
+	echo "$@: $^"
+
+iotjs_modules: ${topreldir}/iotjs_modules
+	ln -fs $< "$@"
+
+${topreldir}/iotjs_modules: ${topreldir}/Makefile
+	make -C ${<D} modules
