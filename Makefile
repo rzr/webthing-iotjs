@@ -37,7 +37,7 @@ export NODE_PATH
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
 iotjs-express_url?=https://github.com/samsunginternet/iotjs-express
-iotjs-express_revision?=v0.0.3
+iotjs-express_revision?=v0.0.4
 iotjs_modules_dirs+=${iotjs_modules_dir}/iotjs-express
 
 deploy_modules_dir ?= ${CURDIR}/tmp/deploy/iotjs_modules
