@@ -9,7 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/
  */
-let webthing;
+var webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -17,54 +17,51 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-const Thing = webthing.Thing;
+var Thing = webthing.Thing;
 
-const AdcProperty = require('../adc/adc-property');
-const GpioProperty = require('../gpio/gpio-property');
-const PwmProperty = require('../pwm/pwm-property');
+var AdcProperty = require('../adc/adc-property');
 
-const board = require(process.iotjs.board);
+var GpioProperty = require('../gpio/gpio-property');
+
+var PwmProperty = require('../pwm/pwm-property');
+
+var board = require(process.iotjs.board);
 
 function NucleoF767ziThing(name, type, description) {
-  const self = this;
-  Thing.call(this,
-             name || 'NucleoF767zi',
-             type || [],
-             description || 'A web connected NucleoF767zi');
+  var self = this;
+  Thing.call(this, name || 'NucleoF767zi', type || [], description || 'A web connected NucleoF767zi');
   {
-    this.pinProperties = [
-      new AdcProperty(this, 'ADC0', 0, {
-        description: 'Analog port of NucleoF767zi',
-      }, {
-        device: '/dev/adc0',
-        direction: 'in',
-        pin: board.pin.ADC1_3,
-      }),
-      new GpioProperty(this, 'LD3', false, {
-        description: 'User LED (Red)',
-      }, {
-        direction: 'out',
-        pin: board.pin.PB14,
-      }),
-      new PwmProperty(this, 'PWM0', 50, {
-        description: 'PWM0 port of STM32',
-      }, {pwm: {
-        pin: board.pin.PWM1.CH1_1,
-      }}),
-    ];
-    this.pinProperties.forEach((property) => {
+    this.pinProperties = [new AdcProperty(this, 'ADC0', 0, {
+      description: 'Analog port of NucleoF767zi'
+    }, {
+      device: '/dev/adc0',
+      direction: 'in',
+      pin: board.pin.ADC1_3
+    }), new GpioProperty(this, 'LD3', false, {
+      description: 'User LED (Red)'
+    }, {
+      direction: 'out',
+      pin: board.pin.PB14
+    }), new PwmProperty(this, 'PWM0', 50, {
+      description: 'PWM0 port of STM32'
+    }, {
+      pwm: {
+        pin: board.pin.PWM1.CH1_1
+      }
+    })];
+    this.pinProperties.forEach(function (property) {
       self.addProperty(property);
     });
   }
 
-  this.close = () => {
-    self.pinProperties.forEach((property) => {
+  this.close = function () {
+    self.pinProperties.forEach(function (property) {
       property.close && property.close();
     });
   };
 }
 
-module.exports = () => {
+module.exports = function () {
   if (!module.exports.instance) {
     module.exports.instance = new NucleoF767ziThing();
   }
