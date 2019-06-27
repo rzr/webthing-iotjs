@@ -275,6 +275,9 @@ prep: ${runtime}/modules
 iotjs/modules: ${iotjs_modules_dirs}
 	ls $^
 
+${iotjs_modules_dirs}: ${iotjs_modules_dir}/iotjs-express
+	ls $@
+
 ${iotjs_modules_dir}/iotjs-express:
 	mkdir -p ${@D}
 	git clone --recursive --depth 1 ${iotjs-express_url} -b ${iotjs-express_revision} $@
