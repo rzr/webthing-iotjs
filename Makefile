@@ -90,13 +90,14 @@ build/node: setup node_modules
 
 build: build/${runtime}
 
-run/%: ${main_src} build
+run/%: ${main_src} build modules
 	${@F} $< ${run_args}
 
 run/npm: ${main_src} setup
 	npm start
 
 run: run/${runtime}
+	-sync
 
 node/run: ${main_src}
 	node $<
@@ -133,6 +134,7 @@ test/npm: package.json
 test: test/${runtime}
 
 start: run
+	-sync
 
 start/board/%: example/platform/Makefile example/platform/board/%.js modules
 	${MAKE} -C ${<D} board/${@F}
