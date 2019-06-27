@@ -51,7 +51,8 @@ function runServer() {
   const server = new WebThingServer(new SingleThing(thing), 8888);
 
   process.on('SIGINT', () => {
-    server.stop().then(() => process.exit()).catch(() => process.exit());
+    server.stop();
+    process.exit();
   });
 
   server.start();
