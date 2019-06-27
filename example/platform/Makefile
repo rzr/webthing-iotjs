@@ -49,11 +49,6 @@ setup/node: ${topreldir}/node_modules node_modules
 	@echo "NODE_PATH=$${NODE_PATH}"
 	@echo "$@: $^"
 
-setup/iotjs:
-	echo "log: IoT.js's help expected to be printed"
-	${runtime} -h ||:
-	echo "$@: $^"
-
 run/%: /sys/class/gpio/export ${main_src} setup
 	ls -l $<
 	-which ${@F}
@@ -147,3 +142,15 @@ traffic-phat/%: ${main_src} gpio
  ${sudo} ${gpio} unexport $${num} ; \
  done
 	${MAKE} run/${@F} run_args="${@D}"
+
+### IoT.js related rules:
+setup/iotjs: iotjs_modules
+	echo "log: IoT.js's help expected to be printed"
+	${runtime} -h ||:
+	echo "$@: $^"
+
+iotjs_modules: ${topreldir}/iotjs_modules
+	ln -fs $< "$@"
+
+${topreldir}/iotjs_modules: ${topreldir}/Makefile
+        make -C ${<D} modules
