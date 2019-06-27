@@ -10,9 +10,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
@@ -54,11 +58,13 @@ class FlexPHatThing extends Thing {
     });
   }
 
-  close() {
-    this.gpioProperties.forEach((property) => {
+  this.close = () => {
+    self.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {

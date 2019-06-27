@@ -10,9 +10,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Thing = webthing.Thing;
 
 const AdcProperty = require('../adc/adc-property');
 const GpioProperty = require('../gpio/gpio-property');
@@ -58,11 +62,13 @@ c0053000.adc/iio:device0/in_voltage1_raw'}),
     });
   }
 
-  close() {
+  this.close = () => {
     this.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
+
+  return this;
 }
 
 module.exports = function() {
