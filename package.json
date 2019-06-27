@@ -12,21 +12,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-iot/webthing-node.git"
+    "url": "git+https://github.com/rzr/webthing-iotjs.git"
   },
   "keywords": [
     "mozilla",
     "iot",
     "web",
     "thing",
-    "webthing"
+    "webthing",
+    "iotjs",
+    "iotjs-supported",
+    "iotjs-module"
   ],
-  "author": "Mozilla IoT",
+  "author": "Philippe Coval <p.coval@samsung.com> (https://www.npmjs.com/~rzr)",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/mozilla-iot/webthing-node/issues"
+    "url": "https://github.com/rzr/webthing-iotjs/issues"
   },
-  "homepage": "https://github.com/mozilla-iot/webthing-node#readme",
+  "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
     "ajv": "^6.12.0",
     "body-parser": "^1.19.0",
