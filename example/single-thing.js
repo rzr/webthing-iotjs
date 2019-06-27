@@ -2,37 +2,13 @@
 // SPDX-License-Identifier: MPL-2.0
 
 const {
-  Action,
-  Event,
   Property,
   SingleThing,
   Thing,
   Value,
   WebThingServer,
 } = require('webthing');
-const {v4: uuidv4} = require('uuid');
 
-class OverheatedEvent extends Event {
-  constructor(thing, data) {
-    super(thing, 'overheated', data);
-  }
-}
-
-class FadeAction extends Action {
-  constructor(thing, input) {
-    super(uuidv4(), thing, 'fade', input);
-  }
-
-  performAction() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.thing.setProperty('brightness', this.input.brightness);
-        this.thing.addEvent(new OverheatedEvent(this.thing, 102));
-        resolve();
-      }, this.input.duration);
-    });
-  }
-}
 
 function makeThing() {
   const thing = new Thing('urn:dev:ops:my-lamp-1234',
