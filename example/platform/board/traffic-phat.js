@@ -10,19 +10,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
 
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Thing = webthing.Thing;
 
 const GpioProperty = require('../gpio/gpio-property');
 
-class TrafficPHatThing extends Thing {
-  constructor(name, type, description) {
-    super('urn:dev:ops:my-traffic-phat-1234',
-          name || 'TrafficPHat',
-          type || [],
-          description || 'A web connected Traffic RaspberryPi Hat');
-    const self = this;
+function TrafficPHatThing(name, type, description) {
+  const self = this;
+  Thing.call(this,
+             'urn:dev:ops:my-traffic-phat-1234',
+             name || 'TrafficPHat',
+             type || [],
+             description || 'A web connected Traffic RaspberryPi Hat');
+  {
     this.pinProperties = [
       new GpioProperty(this, 'Red', false, {
         description: 'LED on GPIO2 (Pin2)',
@@ -62,11 +67,11 @@ class TrafficPHatThing extends Thing {
     });
   }
 
-  close() {
-    this.pinProperties.forEach((property) => {
+  this.close = () => {
+    self.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 }
 
 module.exports = function() {
