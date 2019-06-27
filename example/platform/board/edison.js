@@ -18,8 +18,7 @@ const PwmProperty = require('../pwm/pwm-property');
 
 class EdisonThing extends Thing {
   constructor(name, type, description) {
-    super('urn:dev:ops:my-edison-1234',
-          name || 'Edison',
+    super(name || 'Edison',
           type || [],
           description || 'A web connected Edison');
     const self = this;
