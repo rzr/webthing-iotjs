@@ -1,2 +1,11 @@
+#.eslintignore
+**/iotjs_modules/
 **/node_modules/
+# .gitignore
+*~
+*.swp
+*.tgz
+iotjs_modules
+node_modules
+npm-debug.log
 tmp/
