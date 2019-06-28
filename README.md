@@ -63,18 +63,19 @@ Then this thing can be connected to gateway, and rules configured to use the act
 
 For more insights and details please follow guide about setting up gateway, iotjs and demos howtos:
 
-* https://github.com/rzr/webthing-iotjs/wiki
+* <https://github.com/rzr/webthing-iotjs/wiki>
 
 [![Demo](https://media.giphy.com/media/1xo9BDFa4B40JPEzZN/giphy.gif)](https://www.slideshare.net/rzrfreefr/webthingiotjs20181022rzr-120959360/19 "webthing-iotjs-20181027rzr")
 
 
 ## REFERENCES: ##
 
-* https://github.com/mozilla-iot/webthing-node
-* https://github.com/rzr/webthing-iotjs/wiki
-* https://github.com/rzr/webthing-iotjs/wiki/GnuLinux
-* https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs
-* https://libraries.io/npm/webthing-iotjs/
+* <https://github.com/mozilla-iot/webthing-node>
+* <https://github.com/rzr/webthing-iotjs/wiki>
+* <https://github.com/rzr/webthing-iotjs/wiki/GnuLinux>
+* <https://hub.docker.com/r/rzrfreefr/webthing-iotjs>
+* <https://libraries.io/npm/webthing-iotjs/>
+* <https://travis-ci.org/rzr/webthing-iotjs/builds>
 
 
 ## LICENSE: ##
