@@ -44,6 +44,8 @@ deploy_dirs += ${deploy_module_dir}
 deploy_dirs += ${deploy_modules_dir}/iotjs-express
 deploy_srcs += $(addprefix ${deploy_module_dir}/, ${srcs})
 
+port?=8888
+url?=http://localhost:${port}
 
 port?=8888
 url?=http://localhost:${port}
