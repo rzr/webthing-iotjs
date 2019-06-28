@@ -44,6 +44,8 @@ deploy_dirs += ${deploy_module_dir}
 deploy_dirs += ${deploy_modules_dir}/iotjs-express
 deploy_srcs += $(addprefix ${deploy_module_dir}/, ${srcs})
 
+port?=8888
+url?=http://localhost:${port}
 
 help:
 	@echo "## Usage: "
@@ -103,7 +105,7 @@ cleanall: clean
 distclean: cleanall
 	rm -rf node_modules
 
-${tmp_dir}/rule/test/pid/%: ${main_src} build
+${tmp_dir}/rule/test/pid/%: ${main_src} build modules
 	@mkdir -p "${@D}"
 	${@F} $< & echo $$! > "$@"
 	sleep ${run_timeout}
@@ -111,8 +113,12 @@ ${tmp_dir}/rule/test/pid/%: ${main_src} build
 
 test/%: ${tmp_dir}/rule/test/pid/% 
 	cat $<
-	curl http://localhost:8888 \
- || curl -I http://localhost:8888 \
+	curl ${url} || curl -I ${url}
+	@echo ""
+	curl --fail ${url}/0/properties
+	@echo ""
+	curl --fail ${url}/1/properties
+	@echo ""
 	kill $$(cat $<) ||:
 	kill -9 $$(cat $<) ||:
 
