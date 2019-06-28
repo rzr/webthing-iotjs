@@ -32,14 +32,18 @@ you can get started by running example program
 ```
 iotjs -h
 
-iotjs example/multiple-things.js 
-# setting new humidity level: 18.207531485648474
+make start
+#| iotjs example/multiple-things.js
+#| setting new humidity level: 18.207531485648474
 
 curl T -H 'Content-Type: application/json'  http://localhost:8888/
-# [{"name":"My Lamp","href":"/0", (...)  "href":"/1/properties/level"} .. (...) }]
+#| [{"name":"My Lamp","href":"/0", (...)  "href":"/1/properties/level"} .. (...) }]
+
+curl T -H 'Content-Type: application/json'  http://localhost:8888/0/properties
+#| {"on":true,"brightness":50,"level":50}p
 
 curl T -H 'Content-Type: application/json'  http://$HOSTNAME:8888/1/properties/level
-# {"level":42.666}
+#| {"level":42.666}
 ```
 Then thing can be monitored once connected to Mozilla IoT gateway using the Thing Web URL adapter.
 
@@ -47,13 +51,13 @@ Also you can control a "Simplest Thing"
 which is just simulating an actuator (LED, switch, relay...).
 
 ```
-iotjs example/simplest-thing.js 
-# Usage:
-# 
-# iotjs example/simplest-thing.js [port]
+iotjs example/simplest-thing.js
+#| Usage:
+#|
+#| iotjs example/simplest-thing.js [port]
 
 curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' http://localhost:8888/properties/on
-# {"on":true}
+#| {"on":true}
 ```
 
 Then this thing can be connected to gateway, and rules configured to use the actuator.
