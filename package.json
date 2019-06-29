@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "node": "NODE_PATH=. node",
-    "start": "NODE_PATH=. node example/multiple-things",
+    "start": "node example/multiple-things",
     "test": "make test",
     "simplest": "NODE_PATH=. node example/simplest-thing"
   },
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/rzr/webthing-iotjs/issues"
   },
-  "homepage": "https://github.com/rzr/webthing-iotjs/wiki",
+  "homepage": "https://libraries.io/npm/webthing-iotjs",
   "dependencies": {
     "iotjs-express": "0.0.6"
   },
