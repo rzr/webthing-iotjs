@@ -9,22 +9,25 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/
  */
-
-const {
-  Thing,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../../../webthing');
+} catch (err) {
+  webthing = require('webthing-iotjs');
+}
 
 const AdcProperty = require('../adc/adc-property');
 const PwmProperty = require('../pwm/pwm-property');
 
 
-class ARTIK1020Thing extends Thing {
-  constructor(name, type, description) {
-    super('urn:dev:ops:my-artik1020-1234',
-          name || 'ARTIK1020',
-          type || [],
-          description || 'A web connected ARTIK1020');
-    const self = this;
+function ARTIK1020Thing(name, type, description) {
+  const self = this;
+  webthing.Thing.call(this,
+                      'urn:dev:ops:my-artik1020-1234',
+                      name || 'ARTIK1020',
+                      type || [],
+                      description || 'A web connected ARTIK1020');
+  {
     this.pinProperties = [
       new AdcProperty(this, 'ADC0', 0,
                       {description: 'A0 on J24 of board'},
@@ -68,11 +71,11 @@ class ARTIK1020Thing extends Thing {
     });
   }
 
-  close() {
+  this.close = () => {
     this.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 }
 
 module.exports = function() {
