@@ -25,6 +25,7 @@ const GpioProperty = require('../gpio/gpio-property');
 function ARTIK05xThing(name, type, description) {
   const self = this;
   Thing.call(this,
+             'urn:dev:ops:my-artik05x-1234',
              name || 'ARTIK05x',
              type || [],
              description || 'A web connected ARTIK05x');
