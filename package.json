@@ -31,11 +31,6 @@
   },
   "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
-    "ajv": "^6.10.1",
-    "body-parser": "^1.19.0",
-    "dnssd": "^0.4.1",
-    "express": "^4.17.1",
-    "express-ws": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
