@@ -22,6 +22,7 @@ const PwmProperty = require('../pwm/pwm-property');
 function EdisonThing(name, type, description) {
   const self = this;
   webthing.Thing.call(this,
+         'urn:dev:ops:my-edison-1234',
           name || 'Edison',
           type || [],
           description || 'A web connected Edison');
