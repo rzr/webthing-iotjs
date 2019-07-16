@@ -28,6 +28,7 @@ const board = require(process.iotjs.board);
 function NucleoF767ziThing(name, type, description) {
   const self = this;
   Thing.call(this,
+             'urn:dev:ops:my-nucleof767zi-1234',
              name || 'NucleoF767zi',
              type || [],
              description || 'A web connected NucleoF767zi');
