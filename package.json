@@ -34,7 +34,7 @@
   },
   "homepage": "https://libraries.io/npm/webthing-iotjs",
   "dependencies": {
-    "iotjs-express": "^0.0.6"
+    "iotjs-express": "^0.0.7"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
