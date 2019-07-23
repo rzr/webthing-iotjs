@@ -194,6 +194,7 @@ babel/setup: Makefile
 	npm install --save-dev @babel/plugin-transform-arrow-functions
 	npm install --save-dev @babel/plugin-transform-block-scoping
 	npm install --save-dev @babel/plugin-transform-template-literals
+	npm install --save-dev @babel/plugin-transform-parameters
 	@echo "TODO: npm install @babel/plugin-transform-for-of"
 	@echo "TODO: npm install @babel/plugin-transform-classes"
 	npm install --save-dev @babel/preset-env
