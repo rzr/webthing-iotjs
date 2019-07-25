@@ -2,7 +2,7 @@ let webthing;
 try {
   webthing = require('../webthing');
 } catch (err) {
-  webthing = require('webthing');
+  webthing = require('webthing-iotjs');
 }
 const Property = webthing.Property;
 const MultipleThings = webthing.server.MultipleThings;
@@ -55,14 +55,13 @@ function ExampleDimmableLight() {
  * A humidity sensor which updates its measurement every few seconds.
  */
 function FakeGpioHumiditySensor() {
-  {
     Thing.call(this,
       'urn:dev:ops:my-humidity-sensor-1234',
       'My Humidity Sensor',
       ['MultiLevelSensor'],
       'A web connected humidity sensor'
     );
-
+  {
     this.level = new Value(0.0);
     this.addProperty(
       new Property(
