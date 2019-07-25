@@ -40,42 +40,6 @@ function makeThing() {
                    unit: 'percent',
                  }));
 
-  thing.addAvailableAction(
-    'fade',
-    {
-      title: 'Fade',
-      description: 'Fade the lamp to a given level',
-      input: {
-        type: 'object',
-        required: [
-          'brightness',
-          'duration',
-        ],
-        properties: {
-          brightness: {
-            type: 'integer',
-            minimum: 0,
-            maximum: 100,
-            unit: 'percent',
-          },
-          duration: {
-            type: 'integer',
-            minimum: 1,
-            unit: 'milliseconds',
-          },
-        },
-      },
-    },
-    FadeAction);
-
-  thing.addAvailableEvent(
-    'overheated',
-    {
-      description: 'The lamp has exceeded its safe operating temperature',
-      type: 'number',
-      unit: 'degree celsius',
-    });
-
   return thing;
 }
 
