@@ -9,9 +9,9 @@ const {
 /**
  * A dimmable light that logs received commands to stdout.
  */
-class ExampleDimmableLight extends Thing {
-  constructor() {
-    super(
+function ExampleDimmableLight() {
+  {
+    Thing.call(this,
       'urn:dev:ops:my-lamp-1234',
       'My Lamp',
       ['OnOffSwitch', 'Light'],
@@ -50,9 +50,9 @@ class ExampleDimmableLight extends Thing {
 /**
  * A humidity sensor which updates its measurement every few seconds.
  */
-class FakeGpioHumiditySensor extends Thing {
-  constructor() {
-    super(
+function FakeGpioHumiditySensor() {
+  {
+    Thing.call(this,
       'urn:dev:ops:my-humidity-sensor-1234',
       'My Humidity Sensor',
       ['MultiLevelSensor'],
@@ -88,7 +88,7 @@ class FakeGpioHumiditySensor extends Thing {
   /**
    * Mimic an actual sensor updating its reading every couple seconds.
    */
-  readFromGPIO() {
+  this.readFromGPIO = () => {
     return Math.abs(70.0 * Math.random() * (-0.5 + Math.random()));
   }
 }
