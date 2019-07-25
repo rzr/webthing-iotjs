@@ -1,10 +1,14 @@
-const {
-  MultipleThings,
-  Property,
-  Thing,
-  Value,
-  WebThingServer,
-} = require('webthing');
+let webthing;
+try {
+  webthing = require('../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Property = webthing.Property;
+const MultipleThings = webthing.MultipleThings;
+const Thing = webthing.Thing;
+const Value = webthing.Value;
+const WebThingServer = webthing.WebThingServer;
 
 /**
  * A dimmable light that logs received commands to stdout.
