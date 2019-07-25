@@ -47,7 +47,7 @@ setup: setup/${runtime}
 build/%: setup
 	@echo "log: $@: $^"
 
-build/node: setup node_modules eslint
+build/node: setup node_modules
 
 build: build/${runtime}
 
