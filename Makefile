@@ -28,6 +28,9 @@ main_src ?= example/multiple-things.js
 NODE_PATH := .:${NODE_PATH}
 export NODE_PATH
 
+iotjs-express_url?=https://github.com/rzr/iotjs-express
+iotjs-express_revision?=v0.0.2
+iotjs_modules_dirs+=iotjs_modules/iotjs-express
 
 port?=8888
 url?=http://localhost:${port}
@@ -49,6 +52,9 @@ node_modules: package.json
 modules: ${runtime}_modules
 	ls $<
 
+node/modules: node_modules
+	ls $<
+
 package-lock.json: package.json
 	rm -fv "$@"
 	npm install
@@ -61,7 +67,7 @@ setup/node: node_modules
 
 setup: setup/${runtime}
 
-build/%: setup
+build/%: setup ${runtime}/modules
 	@echo "log: $@: $^"
 
 build/node: setup node_modules
@@ -76,8 +82,8 @@ run/npm: ${main_src} setup
 
 run: run/${runtime}
 
-node/run:
-	${MAKE} run/${@D} runtime=${@D}
+node/run: ${main_src}
+	node $<
 
 clean:
 	rm -rf ${tmp_dir}
@@ -94,7 +100,7 @@ ${tmp_dir}/rule/test/pid/%: ${main_src} build modules
 	sleep ${run_timeout}
 	cat $@
 
-test/%: ${tmp_dir}/rule/test/pid/%
+test/%: ${tmp_dir}/rule/test/pid/% 
 	cat $<
 	curl ${url} || curl -I ${url}
 	@echo ""
@@ -245,6 +251,13 @@ retranspile: babel/done transpile/revert
 
 
 ### IoT.js related rules:
+
+iotjs/modules: ${iotjs_modules_dirs}
+	ls $<
+
+iotjs_modules/iotjs-express:
+	mkdir -p ${@D}
+	git clone --recursive --depth 1 ${iotjs-express_url} -b ${iotjs-express_revision} $@
 
 setup/iotjs/devel: ${eslint} ${babel}
 
