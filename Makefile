@@ -89,8 +89,10 @@ build/%: setup ${runtime}/modules
 	@echo "log: $@: $^"
 
 build/node: setup node_modules
+	@echo "log: $@: $^"
 
 build: build/${runtime}
+	@echo "log: $@: $^"
 
 run/%: ${main_src} build modules
 	${@F} $< ${run_args}
@@ -161,11 +163,16 @@ check: check/${runtime}
 git/commit/%:
 	-git commit -sam "${runtime}: WIP: About to do something (${@})"
 
-eslint: .eslintrc.js ${eslint}
+eslint/devel: .eslintrc.js ${eslint}
 	@rm -rf tmp/dist
 	${eslint} --no-color --fix . ||:
 	${eslint} --no-color .
 	git diff --exit-code
+
+eslint: .eslintrc.js ${eslint}
+	@rm -rf tmp/dist
+	${eslint} --no-color --fix . ||:
+	${eslint} --no-color .
 
 eslint/setup: node_modules
 	ls ${eslint} || npm install eslint-plugin-node eslint
