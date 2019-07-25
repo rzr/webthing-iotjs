@@ -25,17 +25,17 @@ const PwmProperty = require('../pwm/pwm-property');
 
 const board = require(process.iotjs.board);
 
-function NucleoF767ziThing(name, type, description) {
+function STM32F7NucleoThing(name, type, description) {
   const self = this;
   Thing.call(this,
-             'urn:dev:ops:my-nucleof767zi-1234',
-             name || 'NucleoF767zi',
+             'urn:dev:ops:my-stm32f7nucleo-1234',
+             name || 'STM32F7Nucleo',
              type || [],
-             description || 'A web connected NucleoF767zi');
+             description || 'A web connected STM32F7Nucleo');
   {
     this.pinProperties = [
       new AdcProperty(this, 'ADC0', 0, {
-        description: 'Analog port of NucleoF767zi',
+        description: 'Analog port of STM32F7Nucleo',
       }, {
         device: '/dev/adc0',
         direction: 'in',
@@ -67,7 +67,7 @@ function NucleoF767ziThing(name, type, description) {
 
 module.exports = () => {
   if (!module.exports.instance) {
-    module.exports.instance = new NucleoF767ziThing();
+    module.exports.instance = new STM32F7NucleoThing();
   }
 
   return module.exports.instance;
