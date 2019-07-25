@@ -1,35 +1,10 @@
 const {
-  Action,
-  Event,
   MultipleThings,
   Property,
   Thing,
   Value,
   WebThingServer,
 } = require('webthing');
-const uuidv4 = require('uuid/v4');
-
-class OverheatedEvent extends Event {
-  constructor(thing, data) {
-    super(thing, 'overheated', data);
-  }
-}
-
-class FadeAction extends Action {
-  constructor(thing, input) {
-    super(uuidv4(), thing, 'fade', input);
-  }
-
-  performAction() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.thing.setProperty('brightness', this.input.brightness);
-        this.thing.addEvent(new OverheatedEvent(this.thing, 102));
-        resolve();
-      }, this.input.duration);
-    });
-  }
-}
 
 /**
  * A dimmable light that logs received commands to stdout.
@@ -69,42 +44,6 @@ class ExampleDimmableLight extends Thing {
           maximum: 100,
           unit: 'percent',
         }));
-
-    this.addAvailableAction(
-      'fade',
-      {
-        title: 'Fade',
-        description: 'Fade the lamp to a given level',
-        input: {
-          type: 'object',
-          required: [
-            'brightness',
-            'duration',
-          ],
-          properties: {
-            brightness: {
-              type: 'integer',
-              minimum: 0,
-              maximum: 100,
-              unit: 'percent',
-            },
-            duration: {
-              type: 'integer',
-              minimum: 1,
-              unit: 'milliseconds',
-            },
-          },
-        },
-      },
-      FadeAction);
-
-    this.addAvailableEvent(
-      'overheated',
-      {
-        description: 'The lamp has exceeded its safe operating temperature',
-        type: 'number',
-        unit: 'degree celsius',
-      });
   }
 }
 
