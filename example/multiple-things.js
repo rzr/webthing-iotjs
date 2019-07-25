@@ -110,10 +110,11 @@ function runServer() {
                                     8888);
 
   process.on('SIGINT', () => {
-    server.stop().then(() => process.exit()).catch(() => process.exit());
+    server.stop();
+    process.exit();
   });
 
-  server.start().catch(console.error);
+  server.start();
 }
 
 runServer();
