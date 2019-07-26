@@ -41,7 +41,7 @@ function STM32F7NucleoThing(name, type, description) {
         direction: 'in',
         pin: board.pin.ADC1_3,
       }),
-      new GpioProperty(this, 'LD3', false, {
+      new GpioProperty(this, 'LD3', true, {
         description: 'User LED (Red)',
       }, {
         direction: 'out',
