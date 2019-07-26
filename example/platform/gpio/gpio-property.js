@@ -30,11 +30,11 @@ const gpio = require('gpio');
 function GpioOutProperty(thing, name, value, metadata, config) {
   const self = this;
   Property.call(this, thing, name, new Value(Boolean(value)),
-          {
-            '@type': 'OnOffProperty',
-            title: (metadata && metadata.title) || `On/Off: ${name}`,
-            type: 'boolean',
-            description: (metadata && metadata.description) ||
+                {
+                  '@type': 'OnOffProperty',
+                  title: (metadata && metadata.title) || `On/Off: ${name}`,
+                  type: 'boolean',
+                  description: (metadata && metadata.description) ||
               (`GPIO Actuator on pin=${config.pin}`),
                 });
   {
@@ -121,7 +121,7 @@ function GpioInProperty(thing, name, value, metadata, config) {
       return err;
     }
     log(`log: GPIO: ${this.getName()}: close:`);
-  }
+  };
 
   return this;
 }

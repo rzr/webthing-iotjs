@@ -23,10 +23,10 @@ const GpioProperty = require('../gpio/gpio-property');
 function TrafficPHatThing(name, type, description) {
   const self = this;
   Thing.call(this,
-         'urn:dev:ops:my-traffic-phat-1234',
-          name || 'TrafficPHat',
-          type || [],
-          description || 'A web connected Traffic RaspberryPi Hat');
+             'urn:dev:ops:my-traffic-phat-1234',
+             name || 'TrafficPHat',
+             type || [],
+             description || 'A web connected Traffic RaspberryPi Hat');
   {
     this.pinProperties = [
       new GpioProperty(this, 'Red', false, {
@@ -71,7 +71,7 @@ function TrafficPHatThing(name, type, description) {
     self.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 }
 
 module.exports = function() {
