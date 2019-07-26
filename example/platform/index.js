@@ -27,6 +27,9 @@ const SingleThing = webthing.SingleThing;
 
 // Update with different board here if needed
 let board = 'artik530';
+if (process.iotjs && process.iotjs.board) {
+  board = process.iotjs.board;
+}
 if (process.argv.length > 2) {
   board = String(process.argv[2]);
 }
