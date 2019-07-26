@@ -67,11 +67,13 @@ class PlayPHatThing extends Thing {
     });
   }
 
-  close() {
+  this.close = () => {
     this.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
   }
+
+  return this;
 }
 
 module.exports = function() {
