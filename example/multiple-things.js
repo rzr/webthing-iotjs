@@ -5,10 +5,10 @@ try {
   webthing = require('webthing');
 }
 const Property = webthing.Property;
-const MultipleThings = webthing.MultipleThings;
+const MultipleThings = webthing.server.MultipleThings;
 const Thing = webthing.Thing;
 const Value = webthing.Value;
-const WebThingServer = webthing.WebThingServer;
+const WebThingServer = webthing.server.WebThingServer;
 
 /**
  * A dimmable light that logs received commands to stdout.
