@@ -58,11 +58,13 @@ class FlexPHatThing extends Thing {
     });
   }
 
-  close() {
-    this.gpioProperties.forEach((property) => {
+  this.close = () => {
+    self.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
   }
+
+  return this;
 }
 
 module.exports = function() {

@@ -62,11 +62,13 @@ c0053000.adc/iio:device0/in_voltage1_raw'}),
     });
   }
 
-  close() {
+  this.close = () => {
     this.pinProperties.forEach((property) => {
       property.close && property.close();
     });
   }
+
+  return this;
 }
 
 module.exports = function() {
