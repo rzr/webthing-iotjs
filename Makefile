@@ -173,6 +173,7 @@ eslint: .eslintrc.js ${eslint}
 	@rm -rf tmp/dist
 	${eslint} --no-color --fix . ||:
 	${eslint} --no-color .
+	-git commit -sam "${runtime}: Linting sources (${@})"
 
 eslint/setup: node_modules
 	ls ${eslint} || npm install eslint-plugin-node eslint
