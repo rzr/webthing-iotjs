@@ -1,13 +1,18 @@
 // -*- mode: js; js-indent-level:2;  -*-
 // SPDX-License-Identifier: MPL-2.0
 
-const {
-  Property,
-  SingleThing,
-  Thing,
-  Value,
-  WebThingServer,
-} = require('webthing');
+let webthing;
+
+try {
+  webthing = require('../webthing');
+} catch (err) {
+  webthing = require('webthing');
+}
+const Property = webthing.Property;
+const SingleThing = webthing.SingleThing;
+const Thing = webthing.Thing;
+const Value = webthing.Value;
+const WebThingServer = webthing.WebThingServer;
 
 
 function makeThing() {
