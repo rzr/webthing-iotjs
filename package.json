@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/rzr/webthing-iotjs#readme",
   "dependencies": {
+    "iotjs-express": "^0.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
