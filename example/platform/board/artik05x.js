@@ -9,7 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-let webthing;
+var webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -17,60 +17,56 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-const Thing = webthing.Thing;
+var Thing = webthing.Thing;
 
-const AdcProperty = require('../adc/adc-property');
-const GpioProperty = require('../gpio/gpio-property');
+var AdcProperty = require('../adc/adc-property');
+
+var GpioProperty = require('../gpio/gpio-property');
 
 function ARTIK05xThing(name, type, description) {
-  const self = this;
-  Thing.call(this,
-             'urn:dev:ops:my-artik05x-1234',
-             name || 'ARTIK05x',
-             type || [],
-             description || 'A web connected ARTIK05x');
+  var self = this;
+  Thing.call(this, 'urn:dev:ops:my-artik05x-1234', name || 'ARTIK05x', type || [], description || 'A web connected ARTIK05x');
   {
     this.pinProperties = [new GpioProperty(this, 'BlueLed', false, {
-      description: 'Blue LED on ARTIK05x board (on GPIO45)',
+      description: 'Blue LED on ARTIK05x board (on GPIO45)'
     }, {
       direction: 'out',
-      pin: 49,
+      pin: 49
     }), new GpioProperty(this, 'RedLed', false, {
-      description: 'Red LED on ARTIK05x board (on GPIO45)',
+      description: 'Red LED on ARTIK05x board (on GPIO45)'
     }, {
       direction: 'out',
-      pin: 45,
+      pin: 45
     }), new GpioProperty(this, 'LeftButton', true, {
-      description: 'Left Button on ARTIK05x board (on GPIO42)',
+      description: 'Left Button on ARTIK05x board (on GPIO42)'
     }, {
       direction: 'in',
-      pin: 42,
+      pin: 42
     }), new GpioProperty(this, 'RightButton', true, {
-      description: 'Right Button on ARTIK05x board (on GPIO44)',
-
+      description: 'Right Button on ARTIK05x board (on GPIO44)'
     }, {
       direction: 'in',
-      pin: 44,
+      pin: 44
     }), new AdcProperty(this, 'ADC1', 0, {
-      description: 'Analog port of ARTIK05x',
+      description: 'Analog port of ARTIK05x'
     }, {
       device: '/dev/adc0',
       direction: 'in',
-      pin: 0,
+      pin: 0
     }), new AdcProperty(this, 'ADC2', 0, {
-      description: 'Analog port of ARTIK05x',
+      description: 'Analog port of ARTIK05x'
     }, {
       device: '/dev/adc0',
       direction: 'in',
-      pin: 1,
+      pin: 1
     })];
-    this.pinProperties.forEach((property) => {
+    this.pinProperties.forEach(function (property) {
       self.addProperty(property);
     });
   }
 
-  this.close = () => {
-    self.pinProperties.forEach((property) => {
+  this.close = function () {
+    self.pinProperties.forEach(function (property) {
       property.close && property.close();
     });
   };
@@ -78,7 +74,7 @@ function ARTIK05xThing(name, type, description) {
   return this;
 }
 
-module.exports = () => {
+module.exports = function () {
   if (!module.exports.instance) {
     module.exports.instance = new ARTIK05xThing();
   }
