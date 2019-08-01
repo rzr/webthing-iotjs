@@ -37,6 +37,13 @@
     "iotjs-express": "^0.0.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-block-scoping": "^7.5.5",
+    "@babel/plugin-transform-parameters": "^7.4.4",
+    "@babel/plugin-transform-template-literals": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0"
   }
