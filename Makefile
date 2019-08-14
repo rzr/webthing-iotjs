@@ -45,7 +45,10 @@ deploy_dirs += ${deploy_modules_dir}/iotjs-express
 deploy_srcs += $(addprefix ${deploy_module_dir}/, ${srcs})
 
 port?=8888
-url?=http://localhost:${port}
+ssl_port?=4443
+hostname?=localhost
+url?=http://${hostname}:${port}
+https_url?=https://${hostname}:${port}
 
 help:
 	@echo "## Usage: "
@@ -134,6 +137,17 @@ start: run
 
 start/board/%: example/platform/Makefile example/platform/board/%.js modules
 	${MAKE} -C ${<D} board/${@F}
+
+start/ssl/%:
+	npm run ${@F} -- "${ssl_port}" "${hostname}" --ssl
+
+ssl/%:
+	mkdir -p $@
+	openssl req -nodes -new -x509 -keyout ${@}/ssl.key -out ${@}/ssl.cert
+	@echo "curl -k ${https_url}"
+
+ssl: ssl/${hostname} start/ssl/simplest
+	@echo "log: $@: $<"
 
 check/%: ${lib_srcs}
 	${MAKE} setup modules
