@@ -331,5 +331,11 @@ ${deploy_module_dir}/%: %
 ${deploy_modules_dir}/iotjs-express: ${iotjs_modules_dir}/iotjs-express
 	make -C $< deploy deploy_modules_dir="${deploy_modules_dir}"
 
-deploy: ${deploy_srcs} ${deploy_dirs}
+deploy/deps: ${deploy_dirs}
 	ls $<
+
+deploy/srcs: ${deploy_srcs}
+	ls $<
+
+deploy: deploy/deps deploy/srcs
+	@echo "# log: $@: $^"
