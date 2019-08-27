@@ -18,6 +18,22 @@ https://img.shields.io/npm/v/webthing-iotjs.svg
 )](
 https://www.npmjs.com/package/webthing-iotjs
 )
+[![pulls](
+https://img.shields.io/docker/pulls/rzrfreefr/webthing-iotjs.svg
+)](
+https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs
+)
+[![Automated Builds](
+https://img.shields.io/docker/cloud/automated/rzrfreefr/webthing-iotjs.svg
+)](
+https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs/timeline
+)
+[![Build Status](
+https://img.shields.io/docker/cloud/build/rzrfreefr/webthing-iotjs.svg
+)](
+https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs/builds
+)
+
 [![FOSSA Status](
 https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield
 )](
