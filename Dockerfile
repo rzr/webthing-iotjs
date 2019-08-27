@@ -10,14 +10,14 @@
 #}
 
 FROM rzrfreefr/iotjs-express:v0.0.10
-MAINTAINER Philippe Coval (p.coval@samsung.com)
+LABEL maintainer="Philippe Coval (p.coval@samsung.com)"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL en_US.UTF-8
 ENV LANG ${LC_ALL}
 
 ENV project webthing-iotjs
-ADD . /usr/local/${project}/${project}
+COPY . /usr/local/${project}/${project}
 WORKDIR /usr/local/${project}/${project}
 RUN echo "#log: ${project}: Preparing sources" \
   && set -x \
