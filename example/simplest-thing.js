@@ -42,8 +42,12 @@ function makeThing() {
 
 function runServer() {
   const port = process.argv[2] ? Number(process.argv[2]) : 8888;
-  const url = `http://localhost:${port}/properties/on`;
-
+  const hostname = process.argv[3] ? String(process.argv[3]) : null;
+  const sslOptions = process.argv[4] ? String(process.argv[4]) : null;
+  const url = `${(sslOptions) ?
+    'https' :
+    'http'
+  }://localhost:${port}/properties/on`;
   console.log(`Usage:\n
 ${process.argv[0]} ${process.argv[1]} [port]
 
@@ -52,7 +56,8 @@ curl -X PUT -H 'Content-Type: application/json' --data '{"on": true }' ${url}
 `);
 
   const thing = makeThing();
-  const server = new WebThingServer(new SingleThing(thing), port);
+  const server = new WebThingServer(new SingleThing(thing),
+                                    port, hostname, sslOptions);
   process.on('SIGINT', () => {
     server.stop();
     process.exit();
