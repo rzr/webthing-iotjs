@@ -18,10 +18,10 @@ const WebThingServer = webthing.WebThingServer;
 function ExampleDimmableLight() {
   {
     Thing.call(this,
-      'urn:dev:ops:my-lamp-1234',
-      'My Lamp',
-      ['OnOffSwitch', 'Light'],
-      'A web connected lamp'
+               'urn:dev:ops:my-lamp-1234',
+               'My Lamp',
+               ['OnOffSwitch', 'Light'],
+               'A web connected lamp'
     );
 
     this.addProperty(
@@ -57,12 +57,12 @@ function ExampleDimmableLight() {
  * A humidity sensor which updates its measurement every few seconds.
  */
 function FakeGpioHumiditySensor() {
-    Thing.call(this,
-      'urn:dev:ops:my-humidity-sensor-1234',
-      'My Humidity Sensor',
-      ['MultiLevelSensor'],
-      'A web connected humidity sensor'
-    );
+  Thing.call(this,
+             'urn:dev:ops:my-humidity-sensor-1234',
+             'My Humidity Sensor',
+             ['MultiLevelSensor'],
+             'A web connected humidity sensor'
+  );
   {
     this.level = new Value(0.0);
     this.addProperty(
@@ -95,7 +95,7 @@ function FakeGpioHumiditySensor() {
    */
   this.readFromGPIO = () => {
     return Math.abs(70.0 * Math.random() * (-0.5 + Math.random()));
-  }
+  };
 }
 
 function runServer() {
