@@ -9,7 +9,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/ .
 #}
 
-FROM rzrfreefr/iotjs-express:latest
+FROM rzrfreefr/iotjs-express:v0.0.10
 LABEL maintainer="Philippe Coval (p.coval@samsung.com)"
 
 ENV DEBIAN_FRONTEND noninteractive
