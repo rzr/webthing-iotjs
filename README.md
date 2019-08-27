@@ -117,12 +117,12 @@ For more insights and details please follow guide about setting up gateway, iotj
 
 ## REFERENCES: ##
 
-* https://github.com/mozilla-iot/webthing-node
-* https://github.com/rzr/webthing-iotjs/wiki
-* https://github.com/rzr/webthing-iotjs/wiki/GnuLinux
-* https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs
-* https://libraries.io/npm/webthing-iotjs/
-* https://github.com/jerryscript-project/iotjs-modules/pull/3
+* <https://github.com/mozilla-iot/webthing-node>
+* <https://github.com/rzr/webthing-iotjs/wiki>
+* <https://github.com/rzr/webthing-iotjs/wiki/GnuLinux>
+* <https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs>
+* <https://libraries.io/npm/webthing-iotjs/>
+* <https://github.com/jerryscript-project/iotjs-modules/pull/3>
 
 
 ## LICENSE: ##
