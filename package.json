@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.2.2",
-    "uuid": "^3.3.3"
+    "eslint": "^6.2.2"
   }
 }
