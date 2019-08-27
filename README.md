@@ -33,7 +33,11 @@ https://img.shields.io/docker/cloud/build/rzrfreefr/webthing-iotjs.svg
 )](
 https://cloud.docker.com/repository/docker/rzrfreefr/webthing-iotjs/builds
 )
-
+[![Codacy Badge](
+https://api.codacy.com/project/badge/Grade/dd6c1c71603e49cdb1be332681491900
+)](
+https://app.codacy.com/app/rzr/webthing-iotjs?utm_source=github.com&utm_medium=referral&utm_content=rzr/webthing-iotjs&utm_campaign=Badge_Grade_Dashboard
+)
 [![FOSSA Status](
 https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield
 )](
@@ -50,6 +54,7 @@ https://nodei.co/npm/webthing-iotjs.png
 )](
 https://npmjs.org/package/webthing-iotjs
 )
+
 
 [![Presentation](https://image.slidesharecdn.com/webthing-iotjs-20181022rzr-181027220201/95/webthingiotjs20181022rzr-1-638.jpg)](https://www.slideshare.net/slideshow/embed_code/key/BGdKOn9HHRF4Oa#webthing-iotjs# "WebThingIotJs")
 
