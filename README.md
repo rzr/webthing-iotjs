@@ -1,13 +1,39 @@
 # WEBTHING-IOTJS #
 
-[![GitHub forks](https://img.shields.io/github/forks/rzr/webthing-iotjs.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/rzr/webthing-iotjs/network/)
-[![license](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/rzr/webthing-iotjs.svg?branch=master)](https://travis-ci.org/rzr/webthing-iotjs)
-[![NPM](https://img.shields.io/npm/v/webthing-iotjs.svg)](https://www.npmjs.com/package/webthing-iotjs)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_shield)
-[![IRC Channel](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://kiwiirc.com/client/irc.freenode.net/#tizen)
+[![GitHub forks](
+https://img.shields.io/github/forks/rzr/webthing-iotjs.svg?style=social&label=Fork&maxAge=2592000
+)](
+https://GitHub.com/rzr/webthing-iotjs/network/
+)
+[![license](
+https://img.shields.io/badge/license-MPL--2.0-blue.svg
+)](LICENSE)
+[![Build Status](
+https://travis-ci.org/rzr/webthing-iotjs.svg?branch=master
+)](
+https://travis-ci.org/rzr/webthing-iotjs
+)
+[![NPM](
+https://img.shields.io/npm/v/webthing-iotjs.svg
+)](
+https://www.npmjs.com/package/webthing-iotjs
+)
+[![FOSSA Status](
+https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?type=shield
+)](
+https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_shield
+)
+[![IRC Channel](
+https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
+)](
+https://kiwiirc.com/client/irc.freenode.net/#tizen
+)
 
-[![NPM](https://nodei.co/npm/webthing-iotjs.png)](https://npmjs.org/package/webthing-iotjs)
+[![NPM](
+https://nodei.co/npm/webthing-iotjs.png
+)](
+https://npmjs.org/package/webthing-iotjs
+)
 
 [![Presentation](https://image.slidesharecdn.com/webthing-iotjs-20181022rzr-181027220201/95/webthingiotjs20181022rzr-1-638.jpg)](https://www.slideshare.net/slideshow/embed_code/key/BGdKOn9HHRF4Oa#webthing-iotjs# "WebThingIotJs")
 
