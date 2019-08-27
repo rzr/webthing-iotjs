@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webthing-iotjs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: webthing-iotjs
+    spec:
+      containers:
+      - image: rzrfreefr/webthing-iotjs:latest
+        name: webthing-iotjs
+        ports:
+        - containerPort: 8888
