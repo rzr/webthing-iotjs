@@ -67,7 +67,7 @@ c0053000.adc/iio:device0/in_voltage1_raw'}),
     this.pinProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 
   return this;
 }

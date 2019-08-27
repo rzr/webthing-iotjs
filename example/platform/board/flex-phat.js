@@ -63,7 +63,7 @@ function FlexPHatThing(name, type, description) {
     self.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 
   return this;
 }
