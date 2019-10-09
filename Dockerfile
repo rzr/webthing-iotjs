@@ -9,12 +9,28 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/ .
 #}
 
-FROM node:10-buster
+FROM ubuntu:18.04
 LABEL maintainer="Philippe Coval (p.coval@samsung.com)"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL en_US.UTF-8
 ENV LANG ${LC_ALL}
+
+RUN echo "#log: Configuring locales" \
+  && set -x \
+  && apt-get update -y \
+  && apt-get install -y locales \
+  && echo "${LC_ALL} UTF-8" | tee /etc/locale.gen \
+  && locale-gen ${LC_ALL} \
+  && dpkg-reconfigure locales \
+  && sync
+
+RUN echo "#log: Setup system" \
+  && set -x \
+  && apt-get update -y \
+  && apt-get install -y npm \
+  && apt-get clean \
+  && sync
 
 ENV project webthing-node
 COPY . /usr/local/${project}/${project}
