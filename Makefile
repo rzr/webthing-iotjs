@@ -34,7 +34,7 @@ export NODE_PATH
 
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
-iotjs-express_url?=https://github.com/samsunginternet/iotjs-express
+iotjs-express_url?=https://github.com/rzr/iotjs-express
 iotjs-express_revision?=v0.0.10
 iotjs_modules_dirs+=${iotjs_modules_dir}/iotjs-express
 
@@ -55,9 +55,7 @@ url?=http://localhost:${port}
 
 help:
 	@echo "## Usage: "
-	@echo "# make start # To start default application"
-	@echo "# make test # To test default application"
-	@echo "# make retranspile # To convert source"
+	@echo "# make start"
 
 all: build
 
@@ -107,6 +105,7 @@ run: run/${runtime}
 	-sync
 
 node/run: ${main_src}
+
 	node $<
 
 clean:
