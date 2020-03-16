@@ -10,7 +10,7 @@
 #}
 
 FROM rzrfreefr/iotjs-express:v0.0.11
-LABEL maintainer="Philippe Coval (p.coval@samsung.com)"
+LABEL maintainer="Philippe Coval (rzr@users.sf.net)"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL en_US.UTF-8
