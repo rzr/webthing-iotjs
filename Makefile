@@ -35,7 +35,7 @@ export NODE_PATH
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
 iotjs-express_url?=https://github.com/rzr/iotjs-express
-iotjs-express_revision?=v0.0.10
+iotjs-express_revision?=v0.0.14
 iotjs_modules_dirs+=${iotjs_modules_dir}/iotjs-express
 
 deploy_modules_dir ?= ${CURDIR}/tmp/deploy/iotjs_modules
@@ -306,7 +306,7 @@ ${iotjs_modules_dirs}: ${iotjs_modules_dir}/iotjs-express
 
 ${iotjs_modules_dir}/iotjs-express:
 	mkdir -p ${@D}
-	git clone --recursive --depth 1 ${iotjs-express_url} -b ${iotjs-express_revision} $@
+	git clone --recursive --depth 1 ${${@F}_url} -b ${${@F}_revision} $@
 	-rm -rf ${@}/.git
 
 setup/iotjs/devel: ${eslint} ${babel}
