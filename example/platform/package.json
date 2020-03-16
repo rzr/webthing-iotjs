@@ -8,7 +8,7 @@
     "flex-phat": "NODE_PATH=.:../.. node index flex-phat",
     "play-phat": "NODE_PATH=.:../.. node index play-phat"
   },
-  "author": "Philippe Coval <p.coval@samsung.com>",
+  "author": "Philippe Coval <rzr@users.sf.net>",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
