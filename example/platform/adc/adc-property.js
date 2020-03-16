@@ -73,7 +73,7 @@ function AdcInProperty(thing, name, value, metadata, config) {
       return err;
     }
     log(`log: ADC: ${this.getName()}: close:`);
-  }
+  };
 
   return this;
 }
