@@ -26,7 +26,7 @@
     "iotjs-supported",
     "iotjs-module"
   ],
-  "author": "Philippe Coval <rzr@users.sf.net> (https://www.npmjs.com/~rzr)",
+  "author": "Philippe Coval <rzr@users.sf.net> (https://purl.org/rzr)",
   "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/rzr/webthing-iotjs/issues"
