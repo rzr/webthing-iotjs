@@ -9,7 +9,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-var webthing;
+let webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -17,58 +17,58 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-var Thing = webthing.Thing;
+const Thing = webthing.Thing;
 
-var GpioProperty = require('../gpio/gpio-property');
+const GpioProperty = require('../gpio/gpio-property');
 
 function TrafficPHatThing(name, type, description) {
-  var self = this;
+  const self = this;
   Thing.call(this, 'urn:dev:ops:my-traffic-phat-1234', name || 'TrafficPHat', type || [], description || 'A web connected Traffic RaspberryPi Hat');
   {
     this.pinProperties = [new GpioProperty(this, 'Red', false, {
-      description: 'LED on GPIO2 (Pin2)'
+      description: 'LED on GPIO2 (Pin2)',
     }, {
       direction: 'out',
-      pin: 2
+      pin: 2,
     }), new GpioProperty(this, 'Orange', false, {
-      description: 'LED on GPIO3 (Pin5)'
+      description: 'LED on GPIO3 (Pin5)',
     }, {
       direction: 'out',
-      pin: 3
+      pin: 3,
     }), new GpioProperty(this, 'Green', false, {
-      description: 'LED on GPIO4 (Pin7)'
+      description: 'LED on GPIO4 (Pin7)',
     }, {
       direction: 'out',
-      pin: 4
+      pin: 4,
     }), new GpioProperty(this, 'B1', true, {
-      description: 'SW1 Sensor Button on GPIO3 (Pin33)'
+      description: 'SW1 Sensor Button on GPIO3 (Pin33)',
     }, {
       direction: 'in',
-      pin: 13
+      pin: 13,
     }), new GpioProperty(this, 'B2', true, {
-      description: 'SW2 Sensor button on GPIO19 (Pin35)'
+      description: 'SW2 Sensor button on GPIO19 (Pin35)',
     }, {
       direction: 'in',
-      pin: 19
+      pin: 19,
     }), new GpioProperty(this, 'B3', true, {
-      description: 'SW3 Sensor button on GPIO26 (Pin37)'
+      description: 'SW3 Sensor button on GPIO26 (Pin37)',
     }, {
       direction: 'in',
-      pin: 26
+      pin: 26,
     })];
-    this.pinProperties.forEach(function (property) {
+    this.pinProperties.forEach(function(property) {
       self.addProperty(property);
     });
   }
 
-  this.close = function () {
-    self.pinProperties.forEach(function (property) {
+  this.close = function() {
+    self.pinProperties.forEach(function(property) {
       property.close && property.close();
     });
   };
 }
 
-module.exports = function () {
+module.exports = function() {
   if (!module.exports.instance) {
     module.exports.instance = new TrafficPHatThing();
   }

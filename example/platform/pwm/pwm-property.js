@@ -9,14 +9,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/
  */
-var console = require('console'); // Disable logs here by editing to '!console.log'
+const console = require('console'); // Disable logs here by editing to '!console.log'
 
 
-var log = console.log || function () {};
+const log = console.log || function() {};
 
-var verbose = !console.log || function () {};
+const verbose = !console.log || function() {};
 
-var webthing;
+let webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -25,12 +25,12 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-var pwm = require('pwm');
+const pwm = require('pwm');
 
 function PwmOutProperty(thing, name, value, metadata, config) {
-  var _this = this;
+  const _this = this;
 
-  var self = this;
+  const self = this;
 
   if (typeof config === 'undefined') {
     config = {};
@@ -38,13 +38,13 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 
   webthing.Property.call(this, thing, name || 'PwmOut', new webthing.Value(Number(value)), {
     '@type': 'LevelProperty',
-    title: metadata && metadata.title || "PWM: ".concat(name, " (dutyCycle)"),
+    title: metadata && metadata.title || 'PWM: '.concat(name, ' (dutyCycle)'),
     type: 'integer',
     minimum: config.minimum || 0,
     maximum: config.maximum || 100,
     readOnly: false,
     unit: 'percent',
-    description: metadata && metadata.description || "PWM DutyCycle"
+    description: metadata && metadata.description || 'PWM DutyCycle',
   });
   {
     this.config = config;
@@ -79,12 +79,12 @@ function PwmOutProperty(thing, name, value, metadata, config) {
       this.config.pwm.dutyCycle = 0.5;
     }
 
-    verbose("log: opening: ".concat(this.getName()));
-    this.port = pwm.open(this.config.pwm, function (err) {
-      verbose("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
+    verbose('log: opening: '.concat(this.getName()));
+    this.port = pwm.open(this.config.pwm, function(err) {
+      verbose('log: PWM: '.concat(self.getName(), ': open: ').concat(err));
 
       if (err) {
-        console.error("error: PWM: ".concat(self.getName(), ": open: ").concat(err));
+        console.error('error: PWM: '.concat(self.getName(), ': open: ').concat(err));
         throw err;
       }
 
@@ -92,8 +92,8 @@ function PwmOutProperty(thing, name, value, metadata, config) {
       self.port.setFrequencySync(self.port.freq);
       self.port.setEnableSync(true);
 
-      self.value.valueForwarder = function (value) {
-        var ratio = Number(value) / 100.0;
+      self.value.valueForwarder = function(value) {
+        const ratio = Number(value) / 100.0;
 
         if (typeof self.config.pwm.convert != 'undefined') {
           value = self.config.pwm.convert(value);
@@ -105,17 +105,17 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     });
   }
 
-  this.close = function () {
-    verbose("log: PWM: ".concat(_this.getName(), ": close:"));
+  this.close = function() {
+    verbose('log: PWM: '.concat(_this.getName(), ': close:'));
 
     try {
       self.port && self.port.closeSync();
     } catch (err) {
-      console.error("error: PWM: ".concat(_this.getName(), " close:").concat(err));
+      console.error('error: PWM: '.concat(_this.getName(), ' close:').concat(err));
       return err;
     }
 
-    log("log: PWM: ".concat(_this.getName(), ": close:"));
+    log('log: PWM: '.concat(_this.getName(), ': close:'));
   };
 
   return this;

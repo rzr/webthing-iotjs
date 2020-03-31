@@ -7,7 +7,7 @@
  * This Source Code Form is subject to the terms of the ICS Licence:
  * https://spdx.org/licenses/ISC.html#licenseText
  */
-var fs = require('fs');
+const fs = require('fs');
 
 class Adc {
   constructor(config, callback) {
@@ -16,7 +16,7 @@ class Adc {
   }
 
   readSync() {
-    var contents = fs.readFileSync(this.config.device, 'ascii');
+    const contents = fs.readFileSync(this.config.device, 'ascii');
     return contents;
   }
 
@@ -24,6 +24,6 @@ class Adc {
 
 }
 
-module.exports.open = function (config, callback) {
+module.exports.open = function(config, callback) {
   return new Adc(config, callback);
 };
