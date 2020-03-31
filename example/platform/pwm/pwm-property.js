@@ -9,14 +9,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/
  */
-const console = require('console'); // Disable logs here by editing to '!console.log'
+var console = require('console'); // Disable logs here by editing to '!console.log'
 
 
-const log = console.log || function() {};
+var log = console.log || function () {};
 
-const verbose = !console.log || function() {};
+var verbose = !console.log || function () {};
 
-let webthing;
+var webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -25,12 +25,12 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-const pwm = require('pwm');
+var pwm = require('pwm');
 
 function PwmOutProperty(thing, name, value, metadata, config) {
-  const _this = this;
+  var _this = this;
 
-  const self = this;
+  var self = this;
 
   if (typeof config === 'undefined') {
     config = {};
@@ -44,7 +44,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     maximum: config.maximum || 100,
     readOnly: false,
     unit: 'percent',
-    description: metadata && metadata.description || 'PWM DutyCycle',
+    description: metadata && metadata.description || 'PWM DutyCycle'
   });
   {
     this.config = config;
@@ -80,7 +80,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     }
 
     verbose('log: opening: '.concat(this.getName()));
-    this.port = pwm.open(this.config.pwm, function(err) {
+    this.port = pwm.open(this.config.pwm, function (err) {
       verbose('log: PWM: '.concat(self.getName(), ': open: ').concat(err));
 
       if (err) {
@@ -92,8 +92,8 @@ function PwmOutProperty(thing, name, value, metadata, config) {
       self.port.setFrequencySync(self.port.freq);
       self.port.setEnableSync(true);
 
-      self.value.valueForwarder = function(value) {
-        const ratio = Number(value) / 100.0;
+      self.value.valueForwarder = function (value) {
+        var ratio = Number(value) / 100.0;
 
         if (typeof self.config.pwm.convert != 'undefined') {
           value = self.config.pwm.convert(value);
@@ -105,7 +105,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     });
   }
 
-  this.close = function() {
+  this.close = function () {
     verbose('log: PWM: '.concat(_this.getName(), ': close:'));
 
     try {

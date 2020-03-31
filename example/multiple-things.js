@@ -1,6 +1,6 @@
 // -*- mode: js; js-indent-level:2;  -*-
 // SPDX-License-Identifier: MPL-2.0
-let webthing;
+var webthing;
 
 try {
   webthing = require('../webthing');
@@ -8,11 +8,11 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-const Property = webthing.Property;
-const MultipleThings = webthing.MultipleThings;
-const Thing = webthing.Thing;
-const Value = webthing.Value;
-const WebThingServer = webthing.WebThingServer;
+var Property = webthing.Property;
+var MultipleThings = webthing.MultipleThings;
+var Thing = webthing.Thing;
+var Value = webthing.Value;
+var WebThingServer = webthing.WebThingServer;
 /**
  * A dimmable light that logs received commands to stdout.
  */
@@ -20,15 +20,15 @@ const WebThingServer = webthing.WebThingServer;
 function ExampleDimmableLight() {
   {
     Thing.call(this, 'urn:dev:ops:my-lamp-1234', 'My Lamp', ['OnOffSwitch', 'Light'], 'A web connected lamp');
-    this.addProperty(new Property(this, 'on', new Value(true, function(v) {
+    this.addProperty(new Property(this, 'on', new Value(true, function (v) {
       return console.log('On-State is now', v);
     }), {
       '@type': 'OnOffProperty',
       title: 'On/Off',
       type: 'boolean',
-      description: 'Whether the lamp is turned on',
+      description: 'Whether the lamp is turned on'
     }));
-    this.addProperty(new Property(this, 'brightness', new Value(50, function(v) {
+    this.addProperty(new Property(this, 'brightness', new Value(50, function (v) {
       return console.log('Brightness is now', v);
     }), {
       '@type': 'BrightnessProperty',
@@ -37,7 +37,7 @@ function ExampleDimmableLight() {
       description: 'The level of light from 0-100',
       minimum: 0,
       maximum: 100,
-      unit: 'percent',
+      unit: 'percent'
     }));
   }
 }
@@ -47,7 +47,7 @@ function ExampleDimmableLight() {
 
 
 function FakeGpioHumiditySensor() {
-  const _this = this;
+  var _this = this;
 
   Thing.call(this, 'urn:dev:ops:my-humidity-sensor-1234', 'My Humidity Sensor', ['MultiLevelSensor'], 'A web connected humidity sensor');
   {
@@ -60,12 +60,12 @@ function FakeGpioHumiditySensor() {
       minimum: 0,
       maximum: 100,
       unit: 'percent',
-      readOnly: true,
+      readOnly: true
     })); // Poll the sensor reading every 3 seconds
 
-    setInterval(function() {
+    setInterval(function () {
       // Update the underlying value, which in turn notifies all listeners
-      const newLevel = _this.readFromGPIO();
+      var newLevel = _this.readFromGPIO();
 
       console.log('setting new humidity level:', newLevel);
 
@@ -76,20 +76,20 @@ function FakeGpioHumiditySensor() {
    * Mimic an actual sensor updating its reading every couple seconds.
    */
 
-  this.readFromGPIO = function() {
+  this.readFromGPIO = function () {
     return Math.abs(70.0 * Math.random() * (-0.5 + Math.random()));
   };
 }
 
 function runServer() {
   // Create a thing that represents a dimmable light
-  const light = new ExampleDimmableLight(); // Create a thing that represents a humidity sensor
+  var light = new ExampleDimmableLight(); // Create a thing that represents a humidity sensor
 
-  const sensor = new FakeGpioHumiditySensor(); // If adding more than one thing, use MultipleThings() with a name.
+  var sensor = new FakeGpioHumiditySensor(); // If adding more than one thing, use MultipleThings() with a name.
   // In the single thing case, the thing's name will be broadcast.
 
-  const server = new WebThingServer(new MultipleThings([light, sensor], 'LightAndTempDevice'), 8888);
-  process.on('SIGINT', function() {
+  var server = new WebThingServer(new MultipleThings([light, sensor], 'LightAndTempDevice'), 8888);
+  process.on('SIGINT', function () {
     server.stop();
     process.exit();
   });

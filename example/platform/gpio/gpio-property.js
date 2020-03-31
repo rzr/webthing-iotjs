@@ -9,14 +9,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
  */
-const console = require('console'); // Disable logs here by editing to '!console.log'
+var console = require('console'); // Disable logs here by editing to '!console.log'
 
 
-const log = console.log || function() {};
+var log = console.log || function () {};
 
-const verbose = !console.log || function() {};
+var verbose = !console.log || function () {};
 
-let webthing;
+var webthing;
 
 try {
   webthing = require('../../../webthing');
@@ -24,27 +24,27 @@ try {
   webthing = require('webthing-iotjs');
 }
 
-const Property = webthing.Property;
-const Value = webthing.Value;
+var Property = webthing.Property;
+var Value = webthing.Value;
 
-const gpio = require('gpio');
+var gpio = require('gpio');
 
 function GpioOutProperty(thing, name, value, metadata, config) {
-  const _this = this;
+  var _this = this;
 
-  const self = this;
+  var self = this;
   Property.call(this, thing, name, new Value(Boolean(value)), {
     '@type': 'OnOffProperty',
     title: metadata && metadata.title || 'On/Off: '.concat(name),
     type: 'boolean',
-    description: metadata && metadata.description || 'GPIO Actuator on pin='.concat(config.pin),
+    description: metadata && metadata.description || 'GPIO Actuator on pin='.concat(config.pin)
   });
   {
     this.config = config;
     this.port = gpio.open({
       pin: config.pin,
-      direction: gpio.DIRECTION.OUT,
-    }, function(err, port) {
+      direction: gpio.DIRECTION.OUT
+    }, function (err, port) {
       log('log: GPIO: '.concat(self.getName(), ': open: ').concat(err));
 
       if (err) {
@@ -54,8 +54,8 @@ function GpioOutProperty(thing, name, value, metadata, config) {
 
       self.port = port;
 
-      self.value.valueForwarder = function(value) {
-        self.port.write(value, function(err) {
+      self.value.valueForwarder = function (value) {
+        self.port.write(value, function (err) {
           if (err) {
             log('error: GPIO: '.concat(self.getName(), ': Fail to write: ').concat(err));
             return err;
@@ -65,7 +65,7 @@ function GpioOutProperty(thing, name, value, metadata, config) {
     });
   }
 
-  this.close = function() {
+  this.close = function () {
     try {
       self.port && self.port.closeSync();
     } catch (err) {
@@ -80,23 +80,23 @@ function GpioOutProperty(thing, name, value, metadata, config) {
 }
 
 function GpioInProperty(thing, name, value, metadata, config) {
-  const _this2 = this;
+  var _this2 = this;
 
-  const self = this;
+  var self = this;
   Property.call(this, thing, name, new Value(value), {
     '@type': 'BooleanProperty',
     label: metadata && metadata.label || 'On/Off: '.concat(name),
     type: 'boolean',
     readOnly: true,
-    description: metadata && metadata.description || 'GPIO Sensor on pin='.concat(config.pin),
+    description: metadata && metadata.description || 'GPIO Sensor on pin='.concat(config.pin)
   });
   {
     this.config = config;
     self.period = 1000;
     self.port = gpio.open({
       pin: config.pin,
-      direction: gpio.DIRECTION.IN,
-    }, function(err) {
+      direction: gpio.DIRECTION.IN
+    }, function (err) {
       log('log: GPIO: '.concat(self.getName(), ': open: ').concat(err, ' (null expected)'));
 
       if (err) {
@@ -104,8 +104,8 @@ function GpioInProperty(thing, name, value, metadata, config) {
         return null;
       }
 
-      self.inverval = setInterval(function() {
-        const value = Boolean(self.port.readSync());
+      self.inverval = setInterval(function () {
+        var value = Boolean(self.port.readSync());
         verbose('log: verbose: GPIO: '.concat(self.getName(), ': update: ').concat(value));
 
         if (value !== self.lastValue) {
@@ -117,7 +117,7 @@ function GpioInProperty(thing, name, value, metadata, config) {
     });
   }
 
-  self.close = function() {
+  self.close = function () {
     try {
       self.inverval && clearInterval(self.inverval);
       self.port && self.port.closeSync();
