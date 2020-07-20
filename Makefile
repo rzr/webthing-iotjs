@@ -23,7 +23,8 @@ babel_out_dir ?= tmp/babel/runtime/${runtime}/dist
 srcs_dir ?= lib example
 lib_srcs ?= $(wildcard *.js lib/*.js | sort | uniq)
 srcs?=${lib_srcs}
-example_srcs?=$(shell find example -iname "*.js" | sort | uniq)
+example_srcs?=$(shell find example -iname "*_modules" -prune -iname "*.js" \
+  | sort | uniq)
 srcs+=${example_srcs}
 run_args ?=
 run_timeout ?= 10
