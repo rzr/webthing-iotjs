@@ -36,7 +36,7 @@ export NODE_PATH
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
 iotjs-express_url?=https://github.com/rzr/iotjs-express
-iotjs-express_revision?=v0.0.14
+iotjs-express_revision?=v0.0.19
 iotjs_modules_dirs+=${iotjs_modules_dir}/iotjs-express
 
 deploy_modules_dir ?= ${CURDIR}/tmp/deploy/iotjs_modules
