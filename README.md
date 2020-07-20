@@ -43,6 +43,11 @@ https://app.fossa.io/api/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs.svg?ty
 )](
 https://app.fossa.io/projects/git%2Bgithub.com%2Frzr%2Fwebthing-iotjs?ref=badge_shield
 )
+[![Fediverse](
+https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
+)](
+https://mastodon.social/@rzr/103580872382220227#:WebThingIotJs
+)
 [![IRC Channel](
 https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
 )](
