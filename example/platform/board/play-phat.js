@@ -72,7 +72,7 @@ function PlayPHatThing(name, type, description) {
     this.gpioProperties.forEach((property) => {
       property.close && property.close();
     });
-  }
+  };
 
   return this;
 }
