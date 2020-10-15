@@ -95,7 +95,7 @@ curl T -H 'Content-Type: application/json'  http://$HOSTNAME:8888/1/properties/l
 # {"level":42.666}
 ```
 
-Then thing can be monitored once connected to Mozilla IoT gateway
+Then thing can be monitored once connected to WebThings IoT gateway
 using the WebThings URL adapter.
 
 Also you can control a "Simplest Thing"
