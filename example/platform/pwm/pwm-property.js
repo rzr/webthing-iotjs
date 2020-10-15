@@ -35,18 +35,18 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     thing,
     name || 'PwmOut',
     new webthing.Value(Number(value)),
-          {
-            '@type': 'LevelProperty',
-            title: (metadata && metadata.title) || `PWM: ${name} (dutyCycle)`,
-            type: 'integer',
-            minimum: config.minimum || 0,
-            maximum: config.maximum || 100,
-            readOnly: false,
-            unit: 'percent',
-            description:
+    {
+      '@type': 'LevelProperty',
+      title: (metadata && metadata.title) || `PWM: ${name} (dutyCycle)`,
+      type: 'integer',
+      minimum: config.minimum || 0,
+      maximum: config.maximum || 100,
+      readOnly: false,
+      unit: 'percent',
+      description:
             (metadata && metadata.description) ||
               (`PWM DutyCycle`),
-          });
+    });
   {
     this.config = config;
 
@@ -59,7 +59,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     }
 
     if (typeof this.config.pwm.period == 'undefined') {
-      this.config.pwm.period = 1/50;
+      this.config.pwm.period = 1 / 50;
     }
     if (typeof this.config.pwm.pin == 'undefined') {
       this.config.pwm.pin = 0;
